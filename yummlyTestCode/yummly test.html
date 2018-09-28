@@ -14,12 +14,12 @@
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript">
-    // Adding click event listen listener to all buttons
-    $(".first-search").on("click", function () {
-      // Grabbing and storing the data-animal property value from the button
-      var foodCategory = $(this).attr("data-food");
 
-      // Constructing a queryURL using the animal name
+      // first search uses "GET" API request by search to produce the recipe ID
+    $(".first-search").on("click", function () {
+
+      var foodCategory = $(this).attr("data-food");
+     
       var appID = "5ed766c5";
       var apiKey = "28992938ae132c1c2a3ed5a1a0bd7a4f";
       var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + appID + "&_app_key=" + apiKey + "&q=" +
@@ -41,16 +41,12 @@
 
 
           idDiv.append(btn).appendTo($("#results-id"));
-
         };
       });
-
     });
 
 
-
-
-    // on click 
+    // on click function for "GET" API request by recipe ID
     $(document).on("click", ".results-btn", function () {
       var recipeID = $(this).attr("recipe-id");
 
@@ -66,10 +62,23 @@
 
         console.log(response);
 
-        // for nutrition info, located in 
-        // response.nutritionEstimates
-          // total calories attribute: ENERC_KCAL
-          // 
+        // for nutrition info, located in response.nutritionEstimates
+        // Object format from response.nutritionEstimates
+        //    { attribute: "",
+        //      description: "",
+        //      unit: {another object},
+        //      value: number            }
+
+
+          // total calories attribute: "ENERC_KCAL"
+          // Total fat attribute: "FAT"
+          // cholesterol attribute: "CHOLE"
+          // sodium attribute: "NA"
+          // total carbohydrates attribute: "CHOCDF"
+          // dietary fiber attribute: "FIBTG"
+          // total sugar attribute: "SUGAR"
+          // protein attribute: "PROCNT"
+
 
       });
 
