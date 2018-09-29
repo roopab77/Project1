@@ -1,0 +1,25 @@
+/*
+2
+Important: 
+
+    set "visibility:hidden" for better results
+
+    or use src/css/imgLiquid.js.css
+
+*/
+
+/* .imgLiquid img{
+
+    visibility:hidden;
+} */
+.photo {
+  margin: 20px;
+  width: 20%;
+  height: auto;
+};
+
+.carousel-item {
+
+  width: 33%;
+  height: auto;
+};
