@@ -10,8 +10,9 @@
   <button class="first-search" data-food="italian">italian</button>
   <button class="first-search" data-food="chinese">chinese</button>
   <button class="first-search" data-food="mexican">Mexican</button>
-  <div id="results-id">
-  </div>
+  <div id="results-id"></div>
+
+  <div id="nutrition-div"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript">
 
@@ -34,7 +35,6 @@
         var results = response.matches;
         for (var i = 0; i < results.length; i++) {
 
-          console.log(response.matches[i].id);
           var idDiv = $("<div>");
           var btn = $("<button>").text("Recipe Id : " + results[i].id);
           btn.addClass("results-btn").attr("recipe-id", results[i].id);
@@ -61,6 +61,8 @@
       }).then(function (response) {
 
         console.log(response);
+        
+        var nutrients = response.nutritionEstimates
 
         // for nutrition info, located in response.nutritionEstimates
         // Object format from response.nutritionEstimates
@@ -79,6 +81,13 @@
           // total sugar attribute: "SUGAR"
           // protein attribute: "PROCNT"
 
+          for (var i = 0; i < nutrients.length; i++) {
+            if (nutrients[i].attribute === "ENERC_KCAL") {
+              $("#nutrition-div").text("Calories: " + Math.round(nutrients[i].value) + nutrients[i].unit.abbreviation);
+            }
+          }
+    
+       
 
       });
 
