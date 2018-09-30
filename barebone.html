@@ -1,111 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
-<link rel="stylesheet" href="style.css">
-<title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
+  <link rel="stylesheet" href="style.css">
+  <title>Title</title>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand"><h1>Quisine</h1></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Choose Your Favorite Type Of Food
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Italian</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Chinesse</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Tex-Mex</a>
-              </div>
-            </li>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">
+      <h1>Quisine</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        </div>
-      </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Choose Your Favorite Type Of Food
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Italian</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Chinesse</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Tex-Mex</a>
+          </div>
+        </li>
 
-      <div class="jumbotron jumbotron-fluid text-center text-dark media-background">
+    </div>
+  </nav>
 
-          <h1 class="display-4">Quisine!</h1>
-        </div>
-        <div class = "container-fluid">
-          
-        </div>
+  <div class="jumbotron jumbotron-fluid text-center text-dark media-background">
 
-    
-      <!-- Big Container to hold Rows, Columns separating it from the carousel  -->
-      <div class="container-fluid">
-          <div class="row">
-            <div class="col-12 col-sm-6 col-md-4 mb-4">
-              <!--  Card to list the possible recipes outcome -->
-              <div class="card">
-                <h5 class="card-header bg-dark text-light">
-                  We found these recipes
-                </h5>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Recipe 1</li>
-                        <li class="list-group-item">Recipe 2</li>
-                        <li class="list-group-item">Recipe 3</li>
-                        <li class="list-group-item">Recipe 4</li>
-                        <li class="list-group-item">Recipe 5</li>
-                        <li class="list-group-item">Recipe 6</li>
-                        <li class="list-group-item">Recipe 7</li>
-                        <li class="list-group-item">Recipe 8</li>
-                        <li class="list-group-item">Recipe 9</li>
-                        <li class="list-group-item">Recipe 10</li>
-                      </ul>
-                </div>
-              </div>
-            </div>
-      
-            <div class="col-12 col-sm-6 col-md-8 mb-4">
-              <!--  Recipe Body  -->
-              <div class="card">
-                <h5 class="card-header bg-dark text-light">
-                  Your Recipe: + Name
-                </h5>
-                <div class="card-body text-center">
-                  <h5>
-                    <p>Recipe</p>
-                    <br>
-                    <p>Goes</p>
-                    <br>
-                    <p>Here</p>
-                  </h5>
-                </div>
-                <div class = "card">
-                  Best Rated Restaurants
-                </div>
-              </div>
-            </div>
-      
+    <h1 class="display-4">Quisine!</h1>
+    <div class="container">
+      <p>Click the button to get your coordinates.</p>
+
+      <input type="radio" onclick="getLocation()">Try It</button>
+
+      <p id="demo"></p>
+
+      <button data-food="italian">italian</button>
+      <button data-food="chinese">chinese</button>
+      <button data-food="mexican">Mexican</button>
+
+    </div>
+  </div>
+  <div class="container-fluid">
+
+  </div>
+
+
+  <!-- Big Container to hold Rows, Columns separating it from the carousel  -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-4 mb-4">
+        <!--  Card to list the possible recipes outcome -->
+        <div class="card">
+          <h5 class="card-header bg-dark text-light">
+            We found these recipes
+          </h5>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Recipe 1</li>
+              <li class="list-group-item">Recipe 2</li>
+              <li class="list-group-item">Recipe 3</li>
+              <li class="list-group-item">Recipe 4</li>
+              <li class="list-group-item">Recipe 5</li>
+              <li class="list-group-item">Recipe 6</li>
+              <li class="list-group-item">Recipe 7</li>
+              <li class="list-group-item">Recipe 8</li>
+              <li class="list-group-item">Recipe 9</li>
+              <li class="list-group-item">Recipe 10</li>
+            </ul>
           </div>
         </div>
       </div>
-      
-      </body>
+
+      <div class="col-12 col-sm-6 col-md-8 mb-4">
+        <!--  Recipe Body  -->
+        <div class="card">
+          <h5 class="card-header bg-dark text-light">
+            Your Recipe: + Name
+          </h5>
+          <div class="card-body text-center">
+            <h5>
+              <p>Recipe</p>
+              <br>
+              <p>Goes</p>
+              <br>
+              <p>Here</p>
+            </h5>
+          </div>
+          <div class="card">
+            <h5 class="card-header bg-dark text-light">
+              Restaurants:
+            </h5>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="restDetails" id="results-appear-here">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+</body>
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"></script>
+
+<script src="assets/javascript/script.js"></script>
 </body>
+
 </html>
