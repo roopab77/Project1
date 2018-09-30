@@ -1,0 +1,43 @@
+*
+2
+Important: 
+
+    set "visibility:hidden" for better results
+
+    or use src/css/imgLiquid.js.css
+
+*/
+
+/* .imgLiquid img{
+
+    visibility:hidden;
+} */
+body {
+  font-family: 'Open Sans', 'Source Sans Pro';
+  font-size: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Serif JP', 'Source Sans Pro';
+} 
+
+.photo {
+  margin: 20px;
+  width: 20%;
+  height: auto;
+};
+
+.carousel-inner{
+  height: 50px;
+}
+
+/* .carousel-item {
+
+  width: 50%;
+  height: 50%;
+};
+
+.carousel img {
+  max-height: 300px;
+  margin: 0 auto;
+} */

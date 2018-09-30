@@ -25,4 +25,6 @@ Important:
 };
 
 
-#results-appear-here {width:50px; height:50px;background:red; display:inline-block;vertical-align:top;}
+.photo, .p1 .rating, .price {display:inline; vertical-align:top;};
+
+.p1 .rating, .price {float: right};

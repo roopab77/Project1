@@ -21,14 +21,14 @@
     // $("#results-appear-here").append("Latitude: " + latitude + "Longitude: " + latitude);
 
     $("button").on("click", function () {
-      // Grabbing and storing the data-animal property value from the button
+      // Grabbing and storing the data-food property value from the button
       var foodCategory = $(this).attr("data-food");
 
       // Constructing a queryURL using the foodCategory 
 
-      var yelpId = "oyikWtp5SyiqR1Dp14yt_A";
-      var yelpSecret =
-        "fuVkmZQYUYVOHcZ3I8yKQTuSmfEr8EfaInmXRf2OqTHirXDr_Gb___dWPEnxf6MGaEZd6YtL5V5hIZvgg7zbnBG2GJeCdPG2Tmwm9V2k8lKXYUKz4ODh750gbliuW3Yx";
+      // var yelpId = "oyikWtp5SyiqR1Dp14yt_A";
+      // var yelpSecret =
+        // "fuVkmZQYUYVOHcZ3I8yKQTuSmfEr8EfaInmXRf2OqTHirXDr_Gb___dWPEnxf6MGaEZd6YtL5V5hIZvgg7zbnBG2GJeCdPG2Tmwm9V2k8lKXYUKz4ODh750gbliuW3Yx";
       var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + foodCategory + "&latitude=" + latitude + "&longitude=" + longitude;
       // "&location=new+york+city+nj";
       // "&latitude=40.82783908257346&longitude=-74.10162448883057";
@@ -37,9 +37,10 @@
         url: corsURL,
         method: "GET",
         headers: {
-          'Authorization': "Bearer 7AownLPDeOyidmxHDJXanfrmJglhs4fRNLDmNCIFHkNvTS2FsZgtXCAbAl5j_zIFKzVYUTJ28e5AbCBInDC_NN0a0RqqGm5D2ErzP0vtjM8IuGCJWoqolUWjfxOrWnYx"
+          'Authorization': "Bearer fuVkmZQYUYVOHcZ3I8yKQTuSmfEr8EfaInmXRf2OqTHirXDr_Gb___dWPEnxf6MGaEZd6YtL5V5hIZvgg7zbnBG2GJeCdPG2Tmwm9V2k8lKXYUKz4ODh750gbliuW3Yx"
         }
 
+        // 7AownLPDeOyidmxHDJXanfrmJglhs4fRNLDmNCIFHkNvTS2FsZgtXCAbAl5j_zIFKzVYUTJ28e5AbCBInDC_NN0a0RqqGm5D2ErzP0vtjM8IuGCJWoqolUWjfxOrWnYx"
       }).then(function (response) {
         // i = 0;
         console.log(response);
@@ -72,7 +73,9 @@
 
             var p1 = $("<h6>").text("Name: " + result[i].name);
             var p = $("<p>").text("Rating: " + result[i].rating);
+            p.addClass("rating");
             var p2 = $("<p>").text("Price: " + result[i].price);
+            p2.addClass("price");
             var p3 = $("<p>").text("Address: " + result[i].location.display_address[0]);
             var p4 = $("<p>").text(result[i].location.display_address[1]);
             var p5 = $("<p>").text("  Phone: " + result[i].display_phone);
@@ -82,9 +85,9 @@
             restaurantImage.addClass("photo");
             restaurantImage.attr("src", result[i].image_url);
             console.log(restaurantImage);
-
-            restaurantDiv.append(p1);
+            
             restaurantDiv.append(restaurantImage);
+            restaurantDiv.append(p1);
             restaurantDiv.append(p);
             restaurantDiv.append(p2);
             restaurantDiv.append(p3);
