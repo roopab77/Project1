@@ -2,6 +2,7 @@
 //These are default values for NY city.
 var latitude = 40.7128;
   var longitude = -74.0060;
+  var category = "";
 
 //Get location
 function getLocation() {
@@ -97,9 +98,9 @@ function GetRecipeDetails(response)
 
 function LoadRestaurants()
 {
-  var foodCategory = $(".recipe-category").attr("value");
+  //var foodCategory = $(".recipe-category").attr("value");
   
-
+foodCategory = category;
   var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + foodCategory + "&latitude=" + latitude + "&longitude=" + longitude;
   var corsURL = "https://cors-anywhere.herokuapp.com/" + queryURL
   console.log(corsURL);
@@ -146,8 +147,8 @@ $(".recipe-category").on("click", function (event) {
   $(".btn:first-child").text($(this).text());
       $(".btn:first-child").val($(this).text());
   event.preventDefault();
-  getLocation();
-  var category = $(this).attr("value");
+ 
+  category = $(this).attr("value");
   var queryURL = buildQueryURL(category);
   $.ajax({
     url: queryURL,
@@ -202,6 +203,7 @@ var cuisineCategory = [
 ]
 //on page load load the carousel with images 
 $(document).ready(function(){
+  getLocation();
 
   for (var i=0; i< cuisineCategory.length ; i++)
   {
