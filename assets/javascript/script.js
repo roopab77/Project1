@@ -1,8 +1,7 @@
-
 //These are default values for NY city.
 var latitude = 40.7128;
-  var longitude = -74.0060;
-  var category = "";
+var longitude = -74.0060;
+var category = "";
 
 //Get location
 function getLocation() {
@@ -14,12 +13,12 @@ function getLocation() {
 }
 
 function showPosition(position) {
- // x.innerHTML = "Latitude: " + position.coords.latitude +
+  // x.innerHTML = "Latitude: " + position.coords.latitude +
   //  "<br>Longitude: " + position.coords.longitude;
 
-  latitude = position.coords.latitude;  
+  latitude = position.coords.latitude;
   longitude = position.coords.longitude;
-  
+
 }
 
 
@@ -54,7 +53,7 @@ function updatePage(RecipeData) {
     recipelink.addClass("card-link");
     recipelink.text(RecipeData.matches[i].recipeName);
     recipelink.attr("value", RecipeData.matches[i].id);
-    recipelink.attr("href","#");
+    recipelink.attr("href", "#");
     recipelink.attr("class", "recipe-link");
     recipeLI.attr("value", RecipeData.matches[i].id);
     recipeLI.html(recipelink);
@@ -64,30 +63,28 @@ function updatePage(RecipeData) {
 }
 
 //Append the ingredients, link to instructions, recipe title and the image 
-function GetRecipeDetails(response)
-{
-  
+function GetRecipeDetails(response) {
+
   $("#recipe-ingredients").empty();
   $("#recipe-image").empty();
   var ingredients = response.ingredientLines;
-  $("#recipe-name").text(response.name);  
+  $("#recipe-name").text(response.name);
   var recipeInstructions = $("<a>");
   var ingredientUL = $("<ul>");
   var recipeImage = $("<img>");
-  for (var i = 0; i< ingredients.length ; i++)
-  {   
+  for (var i = 0; i < ingredients.length; i++) {
     var ingredientLI = $("<li>");
-    ingredientLI.text(ingredients[i]);    
+    ingredientLI.text(ingredients[i]);
     ingredientUL.append(ingredientLI);
   }
-  
+
   var recipelink = response.source.sourceRecipeUrl;
-  var strarr = recipelink.split(".com");  
+  var strarr = recipelink.split(".com");
   recipeInstructions.text(strarr[0] + "....");
-  recipeInstructions.attr("href",recipelink);
-  recipeInstructions.attr("target","_blank");
-  recipeInstructions.attr("rel","nofollow");
-  recipeImage.attr("src",response.images[0].hostedLargeUrl);
+  recipeInstructions.attr("href", recipelink);
+  recipeInstructions.attr("target", "_blank");
+  recipeInstructions.attr("rel", "nofollow");
+  recipeImage.attr("src", response.images[0].hostedLargeUrl);
   $("#recipe-ingredients").append(ingredientUL);
   $("#recipe-ingredients").append("For more instructions click here ");
   $("#recipe-ingredients").append(recipeInstructions);
@@ -96,14 +93,13 @@ function GetRecipeDetails(response)
 
 }
 
-function LoadRestaurants()
-{
+function LoadRestaurants() {
   //var foodCategory = $(".recipe-category").attr("value");
-  
-foodCategory = category;
+
+  foodCategory = category;
   var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + foodCategory + "&latitude=" + latitude + "&longitude=" + longitude;
   var corsURL = "https://cors-anywhere.herokuapp.com/" + queryURL
-  console.log(corsURL);
+  //console.log(corsURL);
   $.ajax({
     url: corsURL,
     method: "GET",
@@ -112,20 +108,20 @@ foodCategory = category;
     }
 
   }).then(function (response) {
-    //console.log(response);
+    console.log(response);
     var divRow = $("<div>");
     $("#results-appear-here").empty();
-    for (var i=0; i<7;i++)
-    {
-      var divCol = $("<div>").addClass("col-md-2");
+    for (var i = 0; i < 6; i++) {
+      
       var divCard = $("<div>").addClass("card");
       var imgtag = $("<img>").addClass("card-img-top img-restaurants");
       var divCardbody = $("<div>").addClass("card-body restaurant-card");
       var pcardtext = $("<p>").addClass("card-text restaurant-name");
-      imgtag.attr("src",response.businesses[i].image_url);
+      imgtag.attr("src", response.businesses[i].image_url);
       imgtag.attr
       pcardtext.append(response.businesses[i].name);
       pcardtext.append("<br/>" + response.businesses[i].location.display_address);
+      pcardtext.append("<br/>Price" + response.businesses[i].price + "   Rating :" + response.businesses[i].rating);
       //console.log(response.businesses[i].name,response.businesses[i].display_address);
       divCardbody.append(pcardtext);
       divCard.append(imgtag);
@@ -134,20 +130,20 @@ foodCategory = category;
       //divCol.append(divCard);
       //divRow.append(divCol);
     }
-    
-    
-   
+
+
+
   });
 }
 // CLICK HANDLERS
 // ==========================================================
 
 // .on("click") function associated with the dropdown Button
-$(".recipe-category").on("click", function (event) {  
+$(".recipe-category").on("click", function (event) {
   $(".btn:first-child").text($(this).text());
-      $(".btn:first-child").val($(this).text());
+  $(".btn:first-child").val($(this).text());
   event.preventDefault();
- 
+
   category = $(this).attr("value");
   var queryURL = buildQueryURL(category);
   $.ajax({
@@ -157,7 +153,7 @@ $(".recipe-category").on("click", function (event) {
 });
 
 
-  $(document).on("click",".recipe-link",function(event){
+$(document).on("click", ".recipe-link", function (event) {
   //console.log($(this));
 
   var recipeID = $(this).attr("value");
@@ -166,60 +162,71 @@ $(".recipe-category").on("click", function (event) {
 
   $.ajax({
     url: queryUrlByID,
-    method: "GET"}).then(function (response) {
+    method: "GET"
+  }).then(function (response) {
     //console.log(response);
     GetRecipeDetails(response);
-    });
-    
+  });
+
 });
 
-
-//Array which has categories and images for the categories 
-var cuisineCategory = [
-  {
-    cuisine: "Italian",
-    imageurl: "../Project1/assets/images/Italian.jpg"     
-  },
-  {
-   cuisine: "Indian",
-   imageurl: "../Project1/assets/images/indian.jpg"
-  },
-  {
-    cuisine: "Chinese",
-   imageurl: "../Project1/assets/images/chinese.jpg"
-  },
-  {
-    cuisine: "American",
-   imageurl: "../Project1/assets/images/American.jpg"
-  },
-  {
-    cuisine: "Vegan",
-   imageurl: "../Project1/assets/images/Vegan.jpg"
-  },
-  {
-  cuisine: "Meditteranean",
-   imageurl: "../Project1/assets/images/meditteranean.jpg"
-  }
-]
 //on page load load the carousel with images 
-$(document).ready(function(){
+$(document).ready(function () {
   getLocation();
 
-  for (var i=0; i< cuisineCategory.length ; i++)
-  {
-    
-      var carouselItemdiv = $("<div>").addClass("carousel-item");
-      
-      var imgTag = $("<img>").addClass("image d-block");
-      imgTag.attr("src","https://via.placeholder.com/500x500");
-      carouselItemdiv.append(imgTag);   
-      $(".carousel-inner").append(carouselItemdiv);
-      }
-
-
-
+//This is for carousel
+$(".vertical-center-4").slick({
+  dots: true,
+  vertical: true,
+  centerMode: true,
+  slidesToShow: 4,
+  slidesToScroll: 2
 });
-
-
-
-
+$(".vertical-center-3").slick({
+  dots: true,
+  vertical: true,
+  centerMode: true,
+  slidesToShow: 3,
+  slidesToScroll: 3
+});
+$(".vertical-center-2").slick({
+  dots: true,
+  vertical: true,
+  centerMode: true,
+  slidesToShow: 2,
+  slidesToScroll: 2
+});
+$(".vertical-center").slick({
+  dots: true,
+  vertical: true,
+  centerMode: true,
+});
+$(".vertical").slick({
+  dots: true,
+  vertical: true,
+  slidesToShow: 3,
+  slidesToScroll: 3
+});
+$(".regular").slick({
+  dots: true,
+  infinite: true,
+  slidesToShow: 3,
+  slidesToScroll: 3
+});
+$(".center").slick({
+  dots: true,
+  infinite: true,
+  centerMode: true,
+  slidesToShow: 5,
+  slidesToScroll: 3
+});
+$(".variable").slick({
+  dots: true,
+  infinite: true,
+  variableWidth: true
+});
+$(".lazy").slick({
+  lazyLoad: 'ondemand', // ondemand progressive anticipated
+  infinite: true
+});
+});
