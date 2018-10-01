@@ -212,73 +212,7 @@ function GetRecipeDetails(response) {
 
 
 
-    if (nutrients[i].attribute === "FAT") {
-      $("<td>")
-        .text("Total Fat:")
-        .appendTo($("#fat"));
-      $("<td>")
-        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-        .appendTo($("#fat"));
-    }
-
-    if (nutrients[i].attribute === "CHOLE") {
-      $("<td>")
-        .text("Cholesterol:")
-        .appendTo($("#cholesterol"));
-      $("<td>")
-        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-        .appendTo($("#cholesterol"));
-    }
-
-    if (nutrients[i].attribute === "NA") {
-      $("<td>")
-        .text("Sodium:")
-        .appendTo($("#sodium"));
-      $("<td>")
-        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-        .appendTo($("#sodium"));
-    }
-
-    if (nutrients[i].attribute === "CHOCDF") {
-      $("<td>")
-        .text("Total Carbohydrates:")
-        .appendTo($("#carbs"));
-      $("<td>")
-        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-        .appendTo($("#carbs"));
-    }
-
-    if (nutrients[i].attribute === "FIBTG") {
-      $("<td>")
-        .text("Dietary Fiber:")
-        .appendTo($("#fiber"));
-      $("<td>")
-        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-        .appendTo($("#fiber"));
-    }
-
-    if (nutrients[i].attribute === "SUGAR") {
-      $("<td>")
-        .text("Total Sugars:")
-        .appendTo($("#sugars"));
-      $("<td>")
-        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-        .appendTo($("#sugars"));
-    }
-
-    if (nutrients[i].attribute === "PROCNT") {
-      $("<td>")
-        .text("Protein:")
-        .appendTo($("#protein"));
-      $("<td>")
-        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-        .appendTo($("#protein"));
-    }
-  };
-
-
-
-};
+}
 
 function LoadRestaurants() {
   //var foodCategory = $(".recipe-category").attr("value");
