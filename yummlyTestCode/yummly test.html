@@ -16,15 +16,29 @@
   <button class="first-search" data-food="mexican">Mexican</button>
   <div id="results-id"></div>
 
-
-  <div class="card mb-4">
-    <div class="card-header">Nutrition Data</div>
-    <div class="card-body">
+  <div class="row">
+    <div class="col-4">
       <table class="table table-sm table-hover" id='nutrition-table'>
+        <thead>
+          <tr>
+            <th>Nutrition Facts</th>
+          </tr>
+        </thead>
         <tbody>
+          <tr id="calories"></tr>
+          <tr id="fat"></tr>
+          <tr id="cholesterol"></tr>
+          <tr id="sodium"></tr>
+          <tr id="carbs"></tr>
+          <tr id="fiber"></tr>
+          <tr id="sugars"></tr>
+          <tr id="protein"></tr>
         </tbody>
       </table>
     </div>
+  </div>
+
+
 
   </div>
 
@@ -53,14 +67,24 @@
         for (var i = 0; i < results.length; i++) {
 
           var idDiv = $("<div>");
-          var btn = $("<button>").text("Recipe Id : " + results[i].id);
-          btn.addClass("results-btn").attr("recipe-id", results[i].id);
+          var resultsBtn = $("<button>")
+          resultsBtn
+            .addClass("results-btn")
+            .attr("recipe-id", results[i].id)
+            .text("Recipe: " + results[i].recipeName);
+          var nutritionBtn = $("<button>")
 
+          nutritionBtn
+            .addClass("nutrition-get")
+            .attr("recipe-id", results[i].id)
+            .text("Get Nutrition Facts");
 
-          idDiv.append(btn).appendTo($("#results-id"));
+          idDiv.append(resultsBtn, nutritionBtn).appendTo($("#results-id"));
         };
       });
     });
+
+    
 
 
     // on click function for "GET" API request by recipe ID
@@ -80,7 +104,14 @@
         console.log(response);
 
 
-        // for nutrition info, located in response.nutritionEstimates
+
+      });
+
+    });
+
+
+
+        // GETTING NUTRITION INFO, located in response.nutritionEstimates
         // Object format from response.nutritionEstimates
         //    { attribute: "",
         //      description: "",
@@ -97,102 +128,111 @@
         // total sugar attribute: "SUGAR"
         // protein attribute: "PROCNT"
 
-        var nutrients = response.nutritionEstimates
+    $(document).on("click", ".nutrition-get", function () {
 
+
+      var recipeID = $(this).attr("recipe-id");
+
+      var appID = "5ed766c5";
+      var apiKey = "28992938ae132c1c2a3ed5a1a0bd7a4f";
+      var queryUrlByID = "http://api.yummly.com/v1/api/recipe/" + recipeID + "?_app_id=" + appID + "&_app_key=" +
+        apiKey;
+
+      $.ajax({
+        url: queryUrlByID,
+        method: "GET"
+      }).then(function (response) {
+
+        var nutrients = response.nutritionEstimates
 
         for (var i = 0; i < nutrients.length; i++) {
           if (nutrients[i].attribute === "ENERC_KCAL") {
-            var nutritionRow = $("<tr>");
+
             $("<td>")
               .text("Calories:")
-              .appendTo(nutritionRow);
+              .appendTo($("#calories"));
             $("<td>")
               .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-              .appendTo(nutritionRow);
-            $("#nutrition-table").append(nutritionRow);
+              .appendTo($("#calories"));
           }
 
           if (nutrients[i].attribute === "FAT") {
-            var nutritionRow = $("<tr>");
+
             $("<td>")
               .text("Total Fat:")
-              .appendTo(nutritionRow);
+              .appendTo($("#fat"));
             $("<td>")
               .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-              .appendTo(nutritionRow);
-            $("#nutrition-table").append(nutritionRow);
+              .appendTo($("#fat"));
+
           }
 
           if (nutrients[i].attribute === "CHOLE") {
-            var nutritionRow = $("<tr>");
+
             $("<td>")
               .text("Cholesterol:")
-              .appendTo(nutritionRow);
+              .appendTo($("#cholesterol"));
             $("<td>")
               .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-              .appendTo(nutritionRow);
-            $("#nutrition-table").append(nutritionRow);
+              .appendTo($("#cholesterol"));
+
           }
 
           if (nutrients[i].attribute === "NA") {
-            var nutritionRow = $("<tr>");
+
             $("<td>")
               .text("Sodium:")
-              .appendTo(nutritionRow);
+              .appendTo($("#sodium"));
             $("<td>")
               .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-              .appendTo(nutritionRow);
-            $("#nutrition-table").append(nutritionRow);
+              .appendTo($("#sodium"));
+
           }
 
           if (nutrients[i].attribute === "CHOCDF") {
-            var nutritionRow = $("<tr>");
+
             $("<td>")
               .text("Total Carbohydrates:")
-              .appendTo(nutritionRow);
+              .appendTo($("#carbs"));
             $("<td>")
               .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-              .appendTo(nutritionRow);
-            $("#nutrition-table").append(nutritionRow);
+              .appendTo($("#carbs"));
+
           }
 
           if (nutrients[i].attribute === "FIBTG") {
-            var nutritionRow = $("<tr>");
+
             $("<td>")
               .text("  Dietary Fiber:")
-              .appendTo(nutritionRow);
+              .appendTo($("#fiber"));
             $("<td>")
               .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-              .appendTo(nutritionRow);
-            $("#nutrition-table").append(nutritionRow);
+              .appendTo($("#fiber"));
+
           }
 
           if (nutrients[i].attribute === "SUGAR") {
-            var nutritionRow = $("<tr>");
+
             $("<td>")
               .text("  Total Sugars:")
-              .appendTo(nutritionRow);
+              .appendTo($("#sugars"));
             $("<td>")
               .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-              .appendTo(nutritionRow);
-            $("#nutrition-table").append(nutritionRow);
+              .appendTo($("#sugars"));
+
           }
 
           if (nutrients[i].attribute === "PROCNT") {
-            var nutritionRow = $("<tr>");
+
             $("<td>")
               .text("Protein:")
-              .appendTo(nutritionRow);
+              .appendTo($("#protein"));
             $("<td>")
               .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
-              .appendTo(nutritionRow);
-            $("#nutrition-table").append(nutritionRow);
+              .appendTo($("#protein"));
+
           }
         }
-
-        
-
-
 
       });
 
