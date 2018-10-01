@@ -1,3 +1,27 @@
+
+//These are default values for NY city.
+var latitude = 40.7128;
+  var longitude = -74.0060;
+
+//Get location
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    //x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+ // x.innerHTML = "Latitude: " + position.coords.latitude +
+  //  "<br>Longitude: " + position.coords.longitude;
+
+  latitude = position.coords.latitude;  
+  longitude = position.coords.longitude;
+  
+}
+
+
 function buildQueryURL(foodCategory) {
   // queryURL is the url we'll use to query the API
 
@@ -5,9 +29,9 @@ function buildQueryURL(foodCategory) {
   var apiKey = "28992938ae132c1c2a3ed5a1a0bd7a4f";
 
   var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + appID + "&_app_key=" + apiKey + "&q=" +
-    "Easy Italian Recipes" + "&allowedCuisine[]cuisine^" + foodCategory;
+    foodCategory + "&allowedCuisine[]cuisine^" + foodCategory;
 
-    console.log(queryURL);
+  //console.log(queryURL);
   return queryURL;
 }
 
@@ -21,13 +45,13 @@ function buildQueryURLforID(recipeID) {
 }
 
 function updatePage(RecipeData) {
-  
   var recipeUl = $("#recipe-list-ul");
+  recipeUl.empty();
   for (var i = 0; i < RecipeData.matches.length; i++) {
     var recipeLI = $("<li>");
     var recipelink = $("<a>");
     recipelink.addClass("card-link");
-    recipelink.text(RecipeData.matches[i].sourceDisplayName);
+    recipelink.text(RecipeData.matches[i].recipeName);
     recipelink.attr("value", RecipeData.matches[i].id);
     recipelink.attr("href","#");
     recipelink.attr("class", "recipe-link");
@@ -35,6 +59,7 @@ function updatePage(RecipeData) {
     recipeLI.html(recipelink);
     recipeUl.append(recipeLI);
   }
+  LoadRestaurants();
 }
 
 //Append the ingredients, link to instructions, recipe title and the image 
@@ -49,8 +74,7 @@ function GetRecipeDetails(response)
   var ingredientUL = $("<ul>");
   var recipeImage = $("<img>");
   for (var i = 0; i< ingredients.length ; i++)
-  {
-    console.log(ingredients[i]);
+  {   
     var ingredientLI = $("<li>");
     ingredientLI.text(ingredients[i]);    
     ingredientUL.append(ingredientLI);
@@ -71,31 +95,60 @@ function GetRecipeDetails(response)
 
 }
 
-// Function to empty out the articles
-function clear() {
-  $("#recipe-list-ul").empty();
+function LoadRestaurants()
+{
+  var foodCategory = $(".recipe-category").attr("value");
+  
+
+  var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + foodCategory + "&latitude=" + latitude + "&longitude=" + longitude;
+  var corsURL = "https://cors-anywhere.herokuapp.com/" + queryURL
+  console.log(corsURL);
+  $.ajax({
+    url: corsURL,
+    method: "GET",
+    headers: {
+      'Authorization': "Bearer fuVkmZQYUYVOHcZ3I8yKQTuSmfEr8EfaInmXRf2OqTHirXDr_Gb___dWPEnxf6MGaEZd6YtL5V5hIZvgg7zbnBG2GJeCdPG2Tmwm9V2k8lKXYUKz4ODh750gbliuW3Yx"
+    }
+
+  }).then(function (response) {
+    //console.log(response);
+    var divRow = $("<div>");
+    $("#results-appear-here").empty();
+    for (var i=0; i<7;i++)
+    {
+      var divCol = $("<div>").addClass("col-md-2");
+      var divCard = $("<div>").addClass("card");
+      var imgtag = $("<img>").addClass("card-img-top img-restaurants");
+      var divCardbody = $("<div>").addClass("card-body restaurant-card");
+      var pcardtext = $("<p>").addClass("card-text restaurant-name");
+      imgtag.attr("src",response.businesses[i].image_url);
+      imgtag.attr
+      pcardtext.append(response.businesses[i].name);
+      pcardtext.append("<br/>" + response.businesses[i].location.display_address);
+      //console.log(response.businesses[i].name,response.businesses[i].display_address);
+      divCardbody.append(pcardtext);
+      divCard.append(imgtag);
+      divCard.append(divCardbody);
+      $("#results-appear-here").append(divCard);
+      //divCol.append(divCard);
+      //divRow.append(divCol);
+    }
+    
+    
+   
+  });
 }
-
-
-
 // CLICK HANDLERS
 // ==========================================================
 
-// .on("click") function associated with the Search Button
-$("#category").on("click", function (event) {
-  // This line allows us to take advantage of the HTML "submit" property
-  // This way we can hit enter on the keyboard and it registers the search
-  // (in addition to clicks). Prevents the page from reloading on form submit.
+// .on("click") function associated with the dropdown Button
+$(".recipe-category").on("click", function (event) {  
+  $(".btn:first-child").text($(this).text());
+      $(".btn:first-child").val($(this).text());
   event.preventDefault();
-
-  // Empty the region associated with the articles
-  clear();
+  getLocation();
   var category = $(this).attr("value");
-  // Build the query URL for the ajax request to the NYT API
   var queryURL = buildQueryURL(category);
-
-  // Make the AJAX request to the API - GETs the JSON data at the queryURL.
-  // The data then gets passed as an argument to the updatePage function
   $.ajax({
     url: queryURL,
     method: "GET"
@@ -104,17 +157,67 @@ $("#category").on("click", function (event) {
 
 
   $(document).on("click",".recipe-link",function(event){
-  console.log($(this));
+  //console.log($(this));
 
   var recipeID = $(this).attr("value");
-  console.log(recipeID);
+  //console.log(recipeID);
   var queryUrlByID = buildQueryURLforID(recipeID);
 
   $.ajax({
     url: queryUrlByID,
     method: "GET"}).then(function (response) {
-    console.log(response);
+    //console.log(response);
     GetRecipeDetails(response);
     });
     
 });
+
+
+//Array which has categories and images for the categories 
+var cuisineCategory = [
+  {
+    cuisine: "Italian",
+    imageurl: "../Project1/assets/images/Italian.jpg"     
+  },
+  {
+   cuisine: "Indian",
+   imageurl: "../Project1/assets/images/indian.jpg"
+  },
+  {
+    cuisine: "Chinese",
+   imageurl: "../Project1/assets/images/chinese.jpg"
+  },
+  {
+    cuisine: "American",
+   imageurl: "../Project1/assets/images/American.jpg"
+  },
+  {
+    cuisine: "Vegan",
+   imageurl: "../Project1/assets/images/Vegan.jpg"
+  },
+  {
+  cuisine: "Meditteranean",
+   imageurl: "../Project1/assets/images/meditteranean.jpg"
+  }
+]
+//on page load load the carousel with images 
+$(document).ready(function(){
+
+  for (var i=0; i< cuisineCategory.length ; i++)
+  {
+    
+      var carouselItemdiv = $("<div>").addClass("carousel-item");
+      
+      var imgTag = $("<img>").addClass("image d-block");
+      imgTag.attr("src","https://via.placeholder.com/500x500");
+      carouselItemdiv.append(imgTag);   
+      $(".carousel-inner").append(carouselItemdiv);
+      }
+
+
+
+});
+
+
+
+

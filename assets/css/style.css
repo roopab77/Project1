@@ -1,0 +1,15 @@
+.img-restaurants{
+  height: 100px;
+  width: 100px;
+}
+
+.restaurant-name
+{
+  font-size : 10px;
+  font-weight: bold;
+}
+
+.restaurant-card
+{
+  padding:0px;
+}

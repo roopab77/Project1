@@ -2,64 +2,76 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Food</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
+  <link rel="stylesheet" href="style.css">
+  <title>Quisine</title>
 </head>
 
 <body>
-  <button data-food="italian">italian</button>
-  <button data-food="chinese">chinese</button>
-  <button data-food="mexican">Mexican</button>
-  <div id="gifs-appear-here">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="card-body">
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="..." alt="Card image cap">
+          <div class="card-body">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+              content.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+          <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card" style="width: 18rem;">
+              <img class="card-img-top" src="..." alt="Card image cap">
+              <div class="card-body">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                  content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+              <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                    content.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="..." alt="Card image cap">
+                  <div class="card-body">
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                      content.</p>
+                  </div>
+                </div>
+              </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript">
-    // Adding click event listen listener to all buttons
-    $("button").on("click", function() {
-      // Grabbing and storing the data-animal property value from the button
-      var foodCategory = $(this).attr("data-food");
-
-      // Constructing a queryURL using the animal name
-      var apiKey = "3ca617f3d0417da5a5803b0767c95a39";
-      var queryURL = "https://api.edamam.com/search?q=" +
-        foodCategory + "&app_id=bb3e82fc&app_key=" + apiKey;
-
-      // Performing an AJAX request with the queryURL
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      }).then(function(response) {
-          console.log(queryURL);
-
-          console.log(response);
-          // storing the data from the AJAX request in the results variable
-          var results = response.data;
-
-          // Looping through each result item
-          //----for (var i = 0; i < results.length; i++) {
-
-            // Creating and storing a div tag
-            //----var animalDiv = $("<div>");
-
-            // Creating a paragraph tag with the result item's rating
-            //----var p = $("<p>").text("Rating: " + results[i].rating);
-
-            // Creating and storing an image tag
-            //-----var animalImage = $("<img>");
-            // Setting the src attribute of the image to a property pulled off the result item
-            //-------animalImage.attr("src", results[i].images.fixed_height.url);
-
-            // Appending the paragraph and image tag to the animalDiv
-            //----animalDiv.append(p);
-            //----animalDiv.append(animalImage);
-
-            // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
-            //-----$("#gifs-appear-here").prepend(animalDiv);
-          });
-    });
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"></script>
+  <script src="restaurant.js"></script>
 </body>
 
 </html>
-
-
