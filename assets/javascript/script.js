@@ -50,7 +50,7 @@ function TopTrendingRecipesOnPageLoad() {
   $.ajax({
     url: queryURL,
     method: "GET"
-  }).then (function(matches){
+  }).then(function (matches) {
 
     updatePage(matches);
 
@@ -94,6 +94,7 @@ function GetRecipeDetails(response) {
 
   $("#recipe-ingredients").empty();
   $("#recipe-image").empty();
+  $(".nutrients-row").empty();
   var ingredients = response.ingredientLines;
   $("#recipe-name").text(response.name);
   var recipeInstructions = $("<a>");
@@ -116,6 +117,99 @@ function GetRecipeDetails(response) {
   $("#recipe-ingredients").append("For more instructions click here ");
   $("#recipe-ingredients").append(recipeInstructions);
   $("#recipe-image").append(recipeImage);
+
+  // NUTRITION FACTS BUTTON AND INFO GET----------------
+  var nutritionBtn = $("<button>")
+  nutritionBtn
+    .addClass("btn btn-info")
+    .attr({
+      "type": "button",
+      "data-toggle": "collapse",
+      "data-target": "#nutrition-table",
+      "aria-expanded": "false",
+      "aria-controls": "nutrition-table"
+    })
+    .text("Nutrition Facts");
+  $("#nutrition-btn-container").html(nutritionBtn);
+
+  var nutrients = response.nutritionEstimates;
+
+  for (var i = 0; i < nutrients.length; i++) {
+    if (nutrients[i].attribute === "ENERC_KCAL") {
+      $("<td>")
+        .text("Calories:")
+        .appendTo($("#calories"));
+      $("<td>")
+        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
+        .appendTo($("#calories"));
+    }
+
+    if (nutrients[i].attribute === "FAT") {
+      $("<td>")
+        .text("Total Fat:")
+        .appendTo($("#fat"));
+      $("<td>")
+        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
+        .appendTo($("#fat"));
+    }
+
+    if (nutrients[i].attribute === "CHOLE") {
+      $("<td>")
+        .text("Cholesterol:")
+        .appendTo($("#cholesterol"));
+      $("<td>")
+        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
+        .appendTo($("#cholesterol"));
+    }
+
+    if (nutrients[i].attribute === "NA") {
+      $("<td>")
+        .text("Sodium:")
+        .appendTo($("#sodium"));
+      $("<td>")
+        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
+        .appendTo($("#sodium"));
+    }
+
+    if (nutrients[i].attribute === "CHOCDF") {
+      $("<td>")
+        .text("Total Carbohydrates:")
+        .appendTo($("#carbs"));
+      $("<td>")
+        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
+        .appendTo($("#carbs"));
+    }
+
+    if (nutrients[i].attribute === "FIBTG") {
+      $("<td>")
+        .text("Dietary Fiber:")
+        .appendTo($("#fiber"));
+      $("<td>")
+        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
+        .appendTo($("#fiber"));
+    }
+
+    if (nutrients[i].attribute === "SUGAR") {
+      $("<td>")
+        .text("Total Sugars:")
+        .appendTo($("#sugars"));
+      $("<td>")
+        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
+        .appendTo($("#sugars"));
+    }
+
+    if (nutrients[i].attribute === "PROCNT") {
+      $("<td>")
+        .text("Protein:")
+        .appendTo($("#protein"));
+      $("<td>")
+        .text(Math.round(nutrients[i].value) + " " + nutrients[i].unit.abbreviation)
+        .appendTo($("#protein"));
+    }
+  };
+
+
+
 
 
 }
@@ -205,8 +299,8 @@ $(document).ready(function () {
   $(".regular").slick({
     dots: true,
     infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToShow: 4,
+    slidesToScroll: 4,
     autoplay: true,
     autoplaySpeed: 2000
   });
