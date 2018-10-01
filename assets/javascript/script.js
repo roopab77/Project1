@@ -2,6 +2,7 @@
 var latitude = 40.7128;
 var longitude = -74.0060;
 var category = "";
+var TopTrendingrecipe = "";
 
 //Get location
 function getLocation() {
@@ -31,7 +32,7 @@ function buildQueryURL(foodCategory) {
   var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + appID + "&_app_key=" + apiKey + "&q=" +
     foodCategory + "&allowedCuisine[]cuisine^" + foodCategory;
 
-  //console.log(queryURL);
+  console.log(queryURL);
   return queryURL;
 }
 
@@ -44,9 +45,35 @@ function buildQueryURLforID(recipeID) {
   return queryUrlByID;
 }
 
+function TopTrendingRecipesOnPageLoad() {
+  var queryURL = buildQueryURL("trending");
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then (function(matches){
+
+    updatePage(matches);
+
+    var recipeID = TopTrendingrecipe;
+
+    var queryUrlByID = buildQueryURLforID(recipeID);
+    console.log("onload url to pull details   " + queryUrlByID);
+
+    $.ajax({
+      url: queryUrlByID,
+      method: "GET"
+    }).then(function (response) {
+      //console.log(response);
+      GetRecipeDetails(response);
+    });
+  });
+}
+
 function updatePage(RecipeData) {
   var recipeUl = $("#recipe-list-ul");
   recipeUl.empty();
+  TopTrendingrecipe = RecipeData.matches[0].id;
+  console.log("Toptrendingrecipe  " + TopTrendingrecipe);
   for (var i = 0; i < RecipeData.matches.length; i++) {
     var recipeLI = $("<li>");
     var recipelink = $("<a>");
@@ -112,7 +139,7 @@ function LoadRestaurants() {
     var divRow = $("<div>");
     $("#results-appear-here").empty();
     for (var i = 0; i < 6; i++) {
-      
+
       var divCard = $("<div>").addClass("card");
       var imgtag = $("<img>").addClass("card-img-top img-restaurants");
       var divCardbody = $("<div>").addClass("card-body restaurant-card");
@@ -170,63 +197,21 @@ $(document).on("click", ".recipe-link", function (event) {
 
 });
 
-//on page load load the carousel with images 
-$(document).ready(function () {
-  getLocation();
+//on page load display the top trending recipes
 
-//This is for carousel
-$(".vertical-center-4").slick({
-  dots: true,
-  vertical: true,
-  centerMode: true,
-  slidesToShow: 4,
-  slidesToScroll: 2
-});
-$(".vertical-center-3").slick({
-  dots: true,
-  vertical: true,
-  centerMode: true,
-  slidesToShow: 3,
-  slidesToScroll: 3
-});
-$(".vertical-center-2").slick({
-  dots: true,
-  vertical: true,
-  centerMode: true,
-  slidesToShow: 2,
-  slidesToScroll: 2
-});
-$(".vertical-center").slick({
-  dots: true,
-  vertical: true,
-  centerMode: true,
-});
-$(".vertical").slick({
-  dots: true,
-  vertical: true,
-  slidesToShow: 3,
-  slidesToScroll: 3
-});
-$(".regular").slick({
-  dots: true,
-  infinite: true,
-  slidesToShow: 3,
-  slidesToScroll: 3
-});
-$(".center").slick({
-  dots: true,
-  infinite: true,
-  centerMode: true,
-  slidesToShow: 5,
-  slidesToScroll: 3
-});
-$(".variable").slick({
-  dots: true,
-  infinite: true,
-  variableWidth: true
-});
-$(".lazy").slick({
-  lazyLoad: 'ondemand', // ondemand progressive anticipated
-  infinite: true
-});
+
+$(document).ready(function () {
+
+  $(".regular").slick({
+    dots: true,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    autoplay: true,
+    autoplaySpeed: 2000
+  });
+  getLocation();
+  TopTrendingRecipesOnPageLoad();
+
+
 });

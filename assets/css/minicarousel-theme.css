@@ -55,7 +55,7 @@
 .slick-next:hover:before,
 .slick-next:focus:before
 {
-    opacity: 1;
+    /* opacity: 1; */
 }
 .slick-prev.slick-disabled:before,
 .slick-next.slick-disabled:before
