@@ -5,7 +5,7 @@ var longitude = -74.0060;
 var category = "";
 var TopTrendingrecipe = "";
 
-//Get location
+//Get current location of the user 
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -14,6 +14,7 @@ function getLocation() {
   }
 }
 
+//this is used to get the current location of the user 
 function showPosition(position) {
   // x.innerHTML = "Latitude: " + position.coords.latitude +
   //  "<br>Longitude: " + position.coords.longitude;
@@ -23,6 +24,7 @@ function showPosition(position) {
 
 }
 
+//Builds query to get the initial recipes based on category
 function buildQueryURL(foodCategory) {
   // queryURL is the url we'll use to query the API
 
@@ -36,6 +38,7 @@ function buildQueryURL(foodCategory) {
   return queryURL;
 }
 
+//Builds a query to get details of the recipe with recipe ID 
 function buildQueryURLforID(recipeID) {
   var appID = "5ed766c5";
   var apiKey = "28992938ae132c1c2a3ed5a1a0bd7a4f";
@@ -45,6 +48,7 @@ function buildQueryURLforID(recipeID) {
   return queryUrlByID;
 }
 
+//On page load fill the  page with top trending recipes and the details of the top recipe 
 function TopTrendingRecipesOnPageLoad() {
   var queryURL = buildQueryURL("trending");
   $.ajax({
@@ -69,6 +73,7 @@ function TopTrendingRecipesOnPageLoad() {
   });
 }
 
+//Get the list of recipes for the specific category selected in the dropdown menu
 function updatePage(RecipeData) {
   var recipeUl = $("#recipe-list-ul");
   recipeUl.empty();
@@ -210,6 +215,7 @@ function GetRecipeDetails(response) {
 
 };
 
+//From the yelp API get the restaurant details 
 function LoadRestaurants() {
   //var foodCategory = $(".recipe-category").attr("value");
 
@@ -256,11 +262,12 @@ function LoadRestaurants() {
 // ==========================================================
 
 // .on("click") function associated with the dropdown Button
-$(".recipe-category").on("click", function (event) {
+  $(".recipe-category").on("click", function (event) {
   $(".btn:first-child").text($(this).text());
   $(".btn:first-child").val($(this).text());
   event.preventDefault();
-
+  //$("#recipe-details").empty();
+  
   category = $(this).attr("value");
   var queryURL = buildQueryURL(category);
   $.ajax({
@@ -269,7 +276,7 @@ $(".recipe-category").on("click", function (event) {
   }).then(updatePage);
 });
 
-
+//When earch recipe title is clicked bring the ingredients image and link and nutriotion facts of the recipe
 $(document).on("click", ".recipe-link", function (event) {
   //console.log($(this));
 
@@ -288,17 +295,16 @@ $(document).on("click", ".recipe-link", function (event) {
 });
 
 //on page load display the top trending recipes
-
-
 $(document).ready(function () {
 
   $(".regular").slick({
     dots: true,
     infinite: true,
     slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000
+    autoplaySpeed: 4000,
+    useTransform: false
   });
   getLocation();
   TopTrendingRecipesOnPageLoad();
