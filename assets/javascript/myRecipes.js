@@ -89,8 +89,6 @@ $(document).on("click", ".delete-RecipefromFB", function (event) {
   $( this ).parent().parent().parent().parent().attr("class","");
   $( this ).parent().parent().parent().parent().attr("style","height:0px"); 
   $( this ).parent().parent().parent().parent().empty();
-  
-  
 });
 
 
