@@ -287,6 +287,29 @@ $(document).on("click", ".recipe-link", function (event) {
 
 });
 
+// grabbing search value
+$("#search-btn").on("click", function (event) {
+  event.preventDefault();
+
+  var searchGrab = $("#search-form-input").val().trim();
+
+  if (searchGrab == "") {
+    $("#search-form-input").attr("placeholder", "Type Something!")
+    return false
+  }
+
+  var appID = "5ed766c5";
+  var apiKey = "28992938ae132c1c2a3ed5a1a0bd7a4f";
+
+  var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + appID + "&_app_key=" + apiKey + "&q=" + searchGrab;
+
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(updatePage);
+
+})
+
 //on page load display the top trending recipes
 
 
