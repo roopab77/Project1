@@ -1,43 +1,53 @@
-*
-2
-Important: 
+.img-restaurants{
+  height: 100px;
+  width: 100px;
+}
+.img-carousel{
 
-    set "visibility:hidden" for better results
-
-    or use src/css/imgLiquid.js.css
-
-*/
-
-/* .imgLiquid img{
-
-    visibility:hidden;
-} */
-body {
-  font-family: 'Open Sans', 'Source Sans Pro';
-  font-size: 20px;
+  height: 300px;
+  width: 300px; 
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Noto Serif JP', 'Source Sans Pro';
-} 
-
-.photo {
-  margin: 20px;
-  width: 20%;
-  height: auto;
-};
-
-.carousel-inner{
-  height: 50px;
+.restaurant-name
+{
+  font-size : 10px;
+  /* font-weight: bold; */
 }
 
-/* .carousel-item {
+.restaurant-card
+{
+  padding:0px;
+}
 
-  width: 50%;
-  height: 50%;
-};
-
-.carousel img {
-  max-height: 300px;
-  margin: 0 auto;
-} */
+html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    .slider {
+      width: 50%;
+      margin: 100px auto;
+    }
+    .slick-slide {
+      margin: 0px 20px;
+    }
+    .slick-slide img {
+      width: 100%;
+    }
+    .slick-prev:before,
+    .slick-next:before {
+      color: black;
+    }
+    .slick-slide {
+      transition: all ease-in-out .3s;
+      opacity: .2;
+    }
+    .slick-active {
+      opacity: .5;
+    }
+    .slick-current {
+      opacity: 1;
+    }
