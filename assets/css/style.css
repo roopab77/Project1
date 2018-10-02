@@ -19,16 +19,23 @@
   padding:0px;
 }
 
+.navbar, .card-header {
+  font-family: 'Lobster', cursive;
+}
+
+
 html,
     body {
       margin: 0;
       padding: 0;
+      background-image: url(../images/BG-restaurant.png);
+      font-family: 'Cabin', sans-serif;
     }
     * {
       box-sizing: border-box;
     }
     .slider {
-      width: 70%;
+      width: 90%;
       height: 100%;
       margin: 10px auto;
     }
@@ -44,7 +51,7 @@ html,
     }
     .slick-slide {
       transition: all ease-in-out .3s;
-      opacity: .2;
+      opacity: .5;
     }
     .slick-active {
       opacity: 1;
@@ -52,4 +59,6 @@ html,
     .slick-current {
       opacity: 1;
     }
+
+
 

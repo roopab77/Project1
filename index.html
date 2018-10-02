@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
-
+  <link href="https://fonts.googleapis.com/css?family=Cabin|Lobster" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="assets/css/minicarousel.css">
   <link rel="stylesheet" type="text/css" href="assets/css/minicarousel-theme.css">
   <link rel="stylesheet" href="assets/css/style.css">
@@ -17,7 +17,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
       aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -33,15 +33,20 @@
         </li>
       </ul>
 
+
       <div class="btn-group mr-5">
         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           Search Category
         </button>
         <div class="dropdown-menu">
+          <a class="recipe-category dropdown-item" href="#" value="American">American</a>
+          <a class="recipe-category dropdown-item" href="#" value="Chinese">Chinese</a>          
+          <a class="recipe-category dropdown-item" href="#" value="Greek">Greek</a>          
           <a class="recipe-category dropdown-item" href="#" value="Italian">Italian</a>
-          <a class="recipe-category dropdown-item" href="#" value="Chinese">Chinese</a>
+          <a class="recipe-category dropdown-item" href="#" value="Mediterranean">Mediterranean</a>     
           <a class="recipe-category dropdown-item" href="#" value="Mexican">Mexican</a>
+     
           <a class="recipe-category dropdown-item" href="#" value="Thai">Thai</a>
 
         </div>
@@ -61,7 +66,7 @@
         <img src="assets/images/thaiSeafood.jpeg" class="img-carousel" value="Thai">
       </div>
       <div>
-        <img src="assets/images/burgerAndFries.jpeg" class="img-carousel" value="american">
+        <img src="assets/images/images/American/burgerAndFries.jpeg" class="img-carousel" value="american">
       </div>
       <div>
         <img src="assets/images/greekDish.jpeg" class="img-carousel" value="Greek">
@@ -69,6 +74,11 @@
       <div>
         <img src="assets/images/wontonSoup.jpeg" class="img-carousel" value="Chinese">
       </div>
+      <div>
+        <img src="assets/images/medit-salad.jpg" class="img-carousel" value="Mediterranean">
+      </div>
+
+
     </section>
 
   </div>
@@ -78,7 +88,7 @@
       <div class="col-12 col-sm-6 col-md-4 mb-4">
         <!--  Card to list the possible recipes outcome -->
         <div class="card">
-          <h5 class="card-header bg-secondary text-light">
+          <h5 class="card-header bg-dark text-light">
             Recipes
           </h5>
           <div class="card-body">
@@ -91,15 +101,15 @@
       <div class="col-12 col-sm-6 col-md-8 mb-4">
         <!--  Recipe Body  -->
         <div class="card" style="width:100%">
-          <h5 class="card-header bg-secondary text-light">
+          <h5 class="card-header bg-dark text-light">
             Your Recipe: <span id="recipe-name"></span>
           </h5>
-          <div class="row">
+          <div class="row m-2">
             <div class="col-7 card-body text-left" id="recipe-ingredients"></div>
             <div class="col-5 d-flex flex-wrap" id="recipe-image" style="margin:auto;  vertical-align: top"></div>
           </div>
           <div class="card">
-            <h5 class="card-header bg-secondary text-light">
+            <h5 class="card-header bg-dark text-light">
               Restaurants: <span id="restaurant-category"></span>
 
             </h5>
