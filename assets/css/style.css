@@ -28,8 +28,9 @@ html,
       box-sizing: border-box;
     }
     .slider {
-      width: 50%;
-      margin: 100px auto;
+      width: 70%;
+      height: 100%;
+      margin: 10px auto;
     }
     .slick-slide {
       margin: 0px 20px;
@@ -46,8 +47,9 @@ html,
       opacity: .2;
     }
     .slick-active {
-      opacity: .5;
+      opacity: 1;
     }
     .slick-current {
       opacity: 1;
     }
+
