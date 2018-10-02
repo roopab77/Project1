@@ -425,11 +425,25 @@ $(document).ready(function () {
   $(".regular").slick({
     dots: true,
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 4000,
-    useTransform: false
+    useTransform: false,
+    responsive: [
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 700,
+        settings: {
+          slidesToShow: 1
+        }
+      }
+    ]
   });
   getLocation();
   TopTrendingRecipesOnPageLoad();
