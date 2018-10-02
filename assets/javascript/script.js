@@ -317,8 +317,8 @@ $(document).ready(function () {
 
   // .on("click") function associated with the dropdown Button
   $(".recipe-category").on("click", function (event) {
-    $(".btn:first-child").text($(this).text());
-    $(".btn:first-child").val($(this).text());
+    $("#dropdown-display:first-child").text($(this).text());
+    $("#dropdown-display:first-child").val($(this).text());
     event.preventDefault();
     //$("#recipe-details").empty();
 
