@@ -1,5 +1,28 @@
+//Initializing firebase
+// FB key
+var config = {
+  apiKey: "AIzaSyBd48dzN-XI4-K8ay8IdXIlkm1__G5_NS8",
+  authDomain: "quisine-49ccf.firebaseapp.com",
+  databaseURL: "https://quisine-49ccf.firebaseio.com",
+  projectId: "quisine-49ccf",
+  storageBucket: "quisine-49ccf.appspot.com",
+  messagingSenderId: "962399784259"
+};
+firebase.initializeApp(config);
+
+var database = firebase.database();
+
+// global variable for FB
+var ingredientsforFB = [];
+var recipenameforFB = "";
+var recipeLinkforFB = "";
+var imagelinkforFB = "";
+var recipeIDforFB = "";
+var CategoryforFB ="";
+
+
 //These are default values for NY city.
-console.log("script.js has loaded");
+
 var latitude = 40.7128;
 var longitude = -74.0060;
 var category = "";
@@ -33,7 +56,8 @@ function buildQueryURL(foodCategory) {
 
   var queryURL = "https://api.yummly.com/v1/api/recipes?_app_id=" + appID + "&_app_key=" + apiKey + "&q=" +
     foodCategory + "&allowedCuisine[]cuisine^" + foodCategory;
-
+//For FB
+CategoryforFB = foodCategory;
   console.log(queryURL);
   return queryURL;
 }
@@ -102,6 +126,8 @@ function GetRecipeDetails(response) {
   $(".nutrients-row").empty();
   var ingredients = response.ingredientLines;
   $("#recipe-name").text(response.name);
+  // For FB
+  recipeNameforFB = response.name;
   var recipeInstructions = $("<a>");
   var ingredientUL = $("<ul>");
   var recipeImage = $("<img>");
@@ -109,9 +135,14 @@ function GetRecipeDetails(response) {
     var ingredientLI = $("<li>");
     ingredientLI.text(ingredients[i]);
     ingredientUL.append(ingredientLI);
+    // For FB
+    ingredientsforFB.push(ingredients[i]);
   }
 
   var recipelink = response.source.sourceRecipeUrl;
+  //For saving into firebase
+  imagelinkforFB = response.images[0].hostedLargeUrl;
+  recipeLinkforFB = recipelink;
   var strarr = recipelink.split(".com");
   recipeInstructions.text(strarr[0] + "....");
   recipeInstructions.attr("href", recipelink);
@@ -269,6 +300,7 @@ function LoadRestaurants() {
   //$("#recipe-details").empty();
   
   category = $(this).attr("value");
+  
   var queryURL = buildQueryURL(category);
   $.ajax({
     url: queryURL,
@@ -283,6 +315,9 @@ $(document).on("click", ".recipe-link", function (event) {
   var recipeID = $(this).attr("value");
   //console.log(recipeID);
   var queryUrlByID = buildQueryURLforID(recipeID);
+  //For FB
+  recipeIDforFB = recipeID;
+   
 
   $.ajax({
     url: queryUrlByID,
@@ -291,6 +326,27 @@ $(document).on("click", ".recipe-link", function (event) {
     //console.log(response);
     GetRecipeDetails(response);
   });
+
+});
+
+//To save the recipes to firebase 
+$("#myRecipes").on("click", function (event) {
+  event.preventDefault();
+  
+  // Creating array to save to FB
+  var myRecipe = {
+
+    recipeName: recipeNameforFB,
+    ingredients: ingredientsforFB,
+    imageLink: imagelinkforFB,
+    recipeLink: recipeLinkforFB,
+    recipeID: recipeIDforFB,
+    recipeCategory: CategoryforFB
+
+  }
+
+  // Saving to FB
+  database.ref().push(myRecipe);
 
 });
 
