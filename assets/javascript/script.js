@@ -80,7 +80,7 @@ function updatePage(RecipeData) {
     recipelink.addClass("card-link");
     recipelink.text(RecipeData.matches[i].recipeName);
     recipelink.attr("value", RecipeData.matches[i].id);
-    recipelink.attr("href", "#");
+    recipelink.attr("href", "#recipe-name");
     recipelink.attr("class", "recipe-link");
     recipeLI.attr("value", RecipeData.matches[i].id);
     recipeLI.html(recipelink);
@@ -257,8 +257,8 @@ function LoadRestaurants() {
 
 // .on("click") function associated with the dropdown Button
 $(".recipe-category").on("click", function (event) {
-  $(".btn:first-child").text($(this).text());
-  $(".btn:first-child").val($(this).text());
+  $("#dropdown-display:first-child").text($(this).text());
+  $("#dropdown-display:first-child").val($(this).text());
   event.preventDefault();
 
   category = $(this).attr("value");
@@ -295,10 +295,24 @@ $(document).ready(function () {
   $(".regular").slick({
     dots: true,
     infinite: true,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 3,
+    slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000
+    autoplaySpeed: 3000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 720,
+        settings: {
+          slidesToShow: 1
+        }
+      }
+    ]
   });
   getLocation();
   TopTrendingRecipesOnPageLoad();
