@@ -103,7 +103,7 @@ $(document).ready(function () {
       recipelink.addClass("card-link");
       recipelink.text(RecipeData.matches[i].recipeName);
       recipelink.attr("value", RecipeData.matches[i].id);
-      recipelink.attr("href", "#");
+      recipelink.attr("href", "#recipe-details-header");
       recipelink.attr("class", "recipe-link");
       recipeLI.attr("value", RecipeData.matches[i].id);
       recipeLI.html(recipelink);
@@ -286,29 +286,24 @@ $(document).ready(function () {
   }
 
   //This function checks if you are already signed in 
-  function CheckIfSignedIn()
-  {
+  function CheckIfSignedIn() {
     var uid = localStorage.getItem("uid");
-    if(uid)
-    {
-      $("#myRecipes").attr("style","visibility:visible");
-      $("#signin").attr("style","visibility:hidden");
-    }
-    else
-    {
-      $("#myRecipes").attr("style","visibility:hidden");
-      $("#signin").attr("style","visibility:visible");
+    if (uid) {
+      $("#myRecipes").attr("style", "visibility:visible");
+      $("#signin").attr("style", "visibility:hidden");
+    } else {
+      $("#myRecipes").attr("style", "visibility:hidden");
+      $("#signin").attr("style", "visibility:visible");
     }
 
   }
 
-  function authorizedUserSetup(userid){
+  function authorizedUserSetup(userid) {
 
-    if(userid)
-    {
+    if (userid) {
       console.log(userid);
-    $("#myRecipes").attr("style","visibility:visible");
-    $("#signin").attr("style","visibility:hidden");
+      $("#myRecipes").attr("style", "visibility:visible");
+      $("#signin").attr("style", "visibility:hidden");
     }
 
   }
@@ -352,13 +347,47 @@ $(document).ready(function () {
 
   });
 
+  // GET RECIPE FROM SEARCH FORM IN NAV BAR
+
+  function queryUrlForSearchBar(foodCategory) {
+    // queryURL is the url we'll use to query the API
+
+    var appID = "5ed766c5";
+    var apiKey = "28992938ae132c1c2a3ed5a1a0bd7a4f";
+
+    var queryURL = "https://api.yummly.com/v1/api/recipes?_app_id=" + appID + "&_app_key=" + apiKey + "&q=" +
+      foodCategory;
+    //For FB
+    CategoryforFB = foodCategory;
+    //console.log(queryURL);
+    return queryURL;
+  }
+
+  $("#search-btn").on("click", function (event) {
+    event.preventDefault();
+
+    category = $("#search-form-input").val().trim();
+
+    if (category == "") {
+      $("#search-form-input").attr("placeholder", "Type Something!")
+      return false
+    }
+
+    var queryURL = queryUrlForSearchBar(category);
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(updatePage);
+
+  });
+
   //To save the recipes to firebase 
   $("#myRecipes").on("click", function (event) {
     event.preventDefault();
     var uid = localStorage.getItem("uid");
-    
+
     // Creating array to save to FB
-    if (uid ) {
+    if (uid) {
       console.log(uid);
       var myRecipe = {
 
@@ -381,18 +410,18 @@ $(document).ready(function () {
 
   //Google Signin 
 
-  $("#signin").on("click",function(event){
-     //Google Authentication
+  $("#signin").on("click", function (event) {
+    //Google Authentication
 
-     firebase.auth().signInWithPopup(provider).then(function (result) {
+    firebase.auth().signInWithPopup(provider).then(function (result) {
       // This gives you a Google Access Token. You can use it to access the Google API.
       var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
 
       authorizedUserSetup(result.user.uid);
-      localStorage.setItem("uid", result.user.uid);   
-     
+      localStorage.setItem("uid", result.user.uid);
+
       // ...
     }).catch(function (error) {
       // Handle Errors here.
@@ -404,7 +433,7 @@ $(document).ready(function () {
       var credential = error.credential;
       // ...
     });
-    
+
 
   });
   //on page load display the top trending recipes
@@ -431,8 +460,7 @@ $(document).ready(function () {
     autoplay: true,
     autoplaySpeed: 4000,
     useTransform: false,
-    responsive: [
-      {
+    responsive: [{
         breakpoint: 1100,
         settings: {
           slidesToShow: 2

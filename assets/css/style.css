@@ -40,6 +40,10 @@ body {
   
 }
 
+#search-form-input {
+  font-family: 'Cabin', sans-serif;
+}
+
 
 
 /* -------------- SLICK CAROUSEL ------------------*/
