@@ -143,6 +143,7 @@ $(document).ready(function () {
     recipeInstructions.attr("target", "_blank");
     recipeInstructions.attr("rel", "nofollow");
     recipeImage.attr("src", response.images[0].hostedLargeUrl);
+    recipeImage.addClass("img-fluid");
     $("#recipe-ingredients").append(ingredientUL);
     $("#recipe-ingredients").append("For more instructions click here ");
     $("#recipe-ingredients").append(recipeInstructions);
@@ -316,8 +317,8 @@ $(document).ready(function () {
 
   // .on("click") function associated with the dropdown Button
   $(".recipe-category").on("click", function (event) {
-    $(".btn:first-child").text($(this).text());
-    $(".btn:first-child").val($(this).text());
+    $("#dropdown-display:first-child").text($(this).text());
+    $("#dropdown-display:first-child").val($(this).text());
     event.preventDefault();
     //$("#recipe-details").empty();
 
@@ -425,11 +426,25 @@ $(document).ready(function () {
   $(".regular").slick({
     dots: true,
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 4000,
-    useTransform: false
+    useTransform: false,
+    responsive: [
+      {
+        breakpoint: 1100,
+        settings: {
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 720,
+        settings: {
+          slidesToShow: 1
+        }
+      }
+    ]
   });
   getLocation();
   TopTrendingRecipesOnPageLoad();
