@@ -9,12 +9,16 @@ var config = {
 };
 firebase.initializeApp(config);
 
+var uid = ""
+
+// upon successful login, in the callback say uid = result.user.uid
+
 var database = firebase.database();
 
 //  Create Firebase event for adding employee to the database and a row in the html when a user adds an entry 
 
 database.ref().on("child_added", function(childSnapshot) {
-  console.log(childSnapshot.val());
+  //console.log(childSnapshot.val());
 
   // Store everything into a variable.
   var recName = childSnapshot.val().recipeName;
@@ -22,9 +26,10 @@ database.ref().on("child_added", function(childSnapshot) {
   var image = childSnapshot.val().imageLink;
   var recLink = childSnapshot.val().recipeLink;
   var recipeID = childSnapshot.val().recipeID;
+  var keyinFB = childSnapshot.key;
   //console.log(ingredients);
 
-  var divCard = $("<div>").addClass("card");
+  var divCard = $("<div>").addClass("card main-card");
   divCard.attr("style","height: 250px; width: 95%; margin:10px; min-width:95%");
   var divCardHeader = $("<div>").addClass("card-header");
   var h5CardTitle = $("<h5>").addClass("card-title");
@@ -48,6 +53,7 @@ database.ref().on("child_added", function(childSnapshot) {
 
   aHref.text(strarr[0] + "....");  
   imgTag.attr("src",image);
+  console.log(ingredients.length);
   for(var i=0;i<ingredients.length;i++)
   {
     var liTag = $("<li>");
@@ -55,7 +61,7 @@ database.ref().on("child_added", function(childSnapshot) {
     ulTag.append(liTag);
   }
   deleteButton.text("Delete");
-  deleteButton.attr("id", recipeID);
+  deleteButton.attr("id", keyinFB);
   divcol1.append(ulTag);
   divcol2.append(imgTag);
   divcol3.append(deleteButton);
@@ -75,9 +81,16 @@ database.ref().on("child_added", function(childSnapshot) {
 
 });
 
-(document).on("click", ".delete-RecipefromFB", function (event) {
+$(document).on("click", ".delete-RecipefromFB", function (event) {
   
-
+  
+ database.ref($(this).attr("id")).remove();
+ // database.ref(uid + "/" + $(this).attr("id")).remove()
+  alert($(this).attr("id"));
+  $( this ).parent().parent().parent().parent().attr("class","");
+  $( this ).parent().parent().parent().parent().attr("style","height:0px"); 
+  $( this ).parent().parent().parent().parent().empty();
+  
   
 });
 
