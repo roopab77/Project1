@@ -143,6 +143,7 @@ $(document).ready(function () {
     recipeInstructions.attr("target", "_blank");
     recipeInstructions.attr("rel", "nofollow");
     recipeImage.attr("src", response.images[0].hostedLargeUrl);
+    recipeImage.addClass("img-fluid");
     $("#recipe-ingredients").append(ingredientUL);
     $("#recipe-ingredients").append("For more instructions click here ");
     $("#recipe-ingredients").append(recipeInstructions);
@@ -432,13 +433,13 @@ $(document).ready(function () {
     useTransform: false,
     responsive: [
       {
-        breakpoint: 900,
+        breakpoint: 1100,
         settings: {
           slidesToShow: 2
         }
       },
       {
-        breakpoint: 700,
+        breakpoint: 720,
         settings: {
           slidesToShow: 1
         }

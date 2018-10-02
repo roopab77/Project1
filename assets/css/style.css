@@ -27,17 +27,24 @@ body {
 }
 
 .restaurant-name {
-  font-size: 10px;
-  /* font-weight: bold; */
+  font-size: 1.1rem;
 }
 
 .restaurant-card {
   padding: 0px;
+ 
+}
+
+#recipe-details-header {
+  padding: 5px 20px;
+  
 }
 
 
+
+/* -------------- SLICK CAROUSEL ------------------*/
 .slider {
-  width: 90%;
+  width: 88%;
   height: 100%;
   margin: 30px auto;
 }
@@ -68,7 +75,7 @@ body {
   opacity: 1;
 }
 
-
+/*-------------------- FOOTER ----------------------*/
 .footer-dark .copyright {
   text-align: center;
   padding-top: 24px;

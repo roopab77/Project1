@@ -57,7 +57,7 @@
   <div id="minicarousel" class="jumbotron jumbotron-fluid py-1 content-center media-background">
     <section class="regular slider">
       <div>
-        <img src="assets//images/images/American/bbq.jpg" class="img-carousel" value="American">
+        <img src="assets/images/bbq.jpg" class="img-carousel" value="American">
       </div>
       <div>
         <img src="assets/images/burrito.jpeg" class="img-carousel" value="mexican">
@@ -97,22 +97,22 @@
       <div class="col-12 col-sm-6 col-md-8 mb-4">
         <!-- Here goes the recipe details like ingredients ,nutrition facts ,image , link -->
         <div class="card" style="width:100%" id="recipe-details">
-          <h5 class="card-header bg-dark text-light"><span id="recipe-name"></span>
-            <div class="btn float-right">
-              <button type="button" class="btn-info" id="signin">Sign in to Save this</button>
-              <button type="button" class="btn-info" id="myRecipes" style="visibility:hidden">
+          <h5 class="card-header bg-dark text-light" id="recipe-details-header"><span id="recipe-name"></span>
+            <div class="float-right">
+              <button type="button" class="btn btn-info" id="signin">Sign in to Save this</button>
+              <button type="button" class="btn btn-info" id="myRecipes" style="visibility:hidden">
                 Add to my Recipes
               </button>
           </h5>
-        </div>
-        
-        <div class="row">
-          <div class="col-7 card-body text-left" id="recipe-ingredients"></div>
-          <div class="col-5 d-flex flex-wrap" id="recipe-image" style="margin:auto;  vertical-align: top"></div>
 
-          <div class="row" style="margin:15px">
-            <div class="col-12" id="nutrition-container">
-              <div class="text-center" id="nutrition-btn-container"></div>
+
+          <div class="row">
+            <div class="col-7 card-body text-left" id="recipe-ingredients"></div>
+            <div class="col-5 d-flex flex-wrap" id="recipe-image" style="margin:auto;  vertical-align: top"></div>
+          </div>
+          <div class="row justify-content-end">
+            <div class="col-6" id="nutrition-container">
+              <div class="text-right m-1" id="nutrition-btn-container"></div>
               <div class="collapse" id="nutrition-table">
                 <table class="table table-sm table-hover">
 
@@ -129,23 +129,30 @@
                 </table>
               </div>
             </div>
-
           </div>
+
         </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
         <div class="card">
           <h5 class="card-header bg-dark text-light">
             Restaurants: <span id="restaurant-category"></span>
-
           </h5>
+
+          <div class="restDetails card-group" id="results-appear-here"></div>
         </div>
       </div>
-
-      <!--Here goes the restaurant details based on the geographic location  -->
-      <div class="restDetails card-group" id="results-appear-here">
-      </div>
-
     </div>
+
+
   </div>
+
+  </div>
+
+
   <div class="footer-dark">
     <footer>
       <div class="container">
