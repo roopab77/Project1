@@ -31,7 +31,7 @@ function buildQueryURL(foodCategory) {
   var appID = "5ed766c5";
   var apiKey = "28992938ae132c1c2a3ed5a1a0bd7a4f";
 
-  var queryURL = "http://api.yummly.com/v1/api/recipes?_app_id=" + appID + "&_app_key=" + apiKey + "&q=" +
+  var queryURL = "https://api.yummly.com/v1/api/recipes?_app_id=" + appID + "&_app_key=" + apiKey + "&q=" +
     foodCategory + "&allowedCuisine[]cuisine^" + foodCategory;
 
   console.log(queryURL);
@@ -42,7 +42,7 @@ function buildQueryURL(foodCategory) {
 function buildQueryURLforID(recipeID) {
   var appID = "5ed766c5";
   var apiKey = "28992938ae132c1c2a3ed5a1a0bd7a4f";
-  var queryUrlByID = "http://api.yummly.com/v1/api/recipe/" + recipeID + "?_app_id=" + appID + "&_app_key=" +
+  var queryUrlByID = "https://api.yummly.com/v1/api/recipe/" + recipeID + "?_app_id=" + appID + "&_app_key=" +
     apiKey;
 
   return queryUrlByID;
