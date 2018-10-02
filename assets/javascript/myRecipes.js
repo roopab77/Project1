@@ -8,8 +8,7 @@ var config = {
   messagingSenderId: "962399784259"
 };
 firebase.initializeApp(config);
-
-var uid = ""
+var uid = localStorage.getItem("uid");
 
 // upon successful login, in the callback say uid = result.user.uid
 
@@ -17,7 +16,7 @@ var database = firebase.database();
 
 //  Create Firebase event for adding employee to the database and a row in the html when a user adds an entry 
 
-database.ref().on("child_added", function(childSnapshot) {
+database.ref(uid).on("child_added", function(childSnapshot) {
   //console.log(childSnapshot.val());
 
   // Store everything into a variable.
@@ -53,7 +52,7 @@ database.ref().on("child_added", function(childSnapshot) {
 
   aHref.text(strarr[0] + "....");  
   imgTag.attr("src",image);
-  console.log(ingredients.length);
+  //console.log(ingredients.length);
   for(var i=0;i<ingredients.length;i++)
   {
     var liTag = $("<li>");
@@ -84,9 +83,9 @@ database.ref().on("child_added", function(childSnapshot) {
 $(document).on("click", ".delete-RecipefromFB", function (event) {
   
   
- database.ref($(this).attr("id")).remove();
+  database.ref(uid + "/" + $(this).attr("id")).remove();
  // database.ref(uid + "/" + $(this).attr("id")).remove()
-  alert($(this).attr("id"));
+  //alert($(this).attr("id"));
   $( this ).parent().parent().parent().parent().attr("class","");
   $( this ).parent().parent().parent().parent().attr("style","height:0px"); 
   $( this ).parent().parent().parent().parent().empty();
