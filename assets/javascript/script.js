@@ -68,6 +68,7 @@ $(document).ready(function () {
     return queryUrlByID;
   }
 
+  //This is the ajax call to yummly with recipeID
   function ajaxtofillIngredients(recipeID)
   { 
     var queryUrlByID = buildQueryURLforID(recipeID);
@@ -303,6 +304,7 @@ $(document).ready(function () {
     });
   }
 
+  //If signed in then display the username and the buttons 
   function doThiswhenSignedin(username)
   {
     $("#login-message").text ("Welcome  " + username);
@@ -312,6 +314,7 @@ $(document).ready(function () {
       $("#recipeadded-message").text("");
   }
 
+  //Hide some buttons and clear when signed out
   function doThiswhenSignedOut()
   {
     $("#login-message").text ("");
@@ -341,6 +344,7 @@ $(document).ready(function () {
 
   }
 
+  //Removes the cookie on sign out
   function removeCookie()
   {
     var res = document.cookie;
@@ -351,14 +355,19 @@ $(document).ready(function () {
     }
   }
 
-   function authorizedUserSetup(userid){
+  // GET RECIPE FROM SEARCH FORM IN NAV BAR
+  function queryUrlForSearchBar(foodCategory) {
+    // queryURL is the url we'll use to query the API
 
-    if(userid)
-    {
-      console.log(userid);
-      doThiswhenSignedin();
-    }
+    var appID = "5ed766c5";
+    var apiKey = "28992938ae132c1c2a3ed5a1a0bd7a4f";
 
+    var queryURL = "https://api.yummly.com/v1/api/recipes?_app_id=" + appID + "&_app_key=" + apiKey + "&q=" +
+      foodCategory;
+    //For FB
+    CategoryforFB = foodCategory;
+    //console.log(queryURL);
+    return queryURL;
   }
   // CLICK HANDLERS
   // ==========================================================
@@ -404,22 +413,7 @@ $(document).ready(function () {
 
   });
 
-  // GET RECIPE FROM SEARCH FORM IN NAV BAR
-
-  function queryUrlForSearchBar(foodCategory) {
-    // queryURL is the url we'll use to query the API
-
-    var appID = "5ed766c5";
-    var apiKey = "28992938ae132c1c2a3ed5a1a0bd7a4f";
-
-    var queryURL = "https://api.yummly.com/v1/api/recipes?_app_id=" + appID + "&_app_key=" + apiKey + "&q=" +
-      foodCategory;
-    //For FB
-    CategoryforFB = foodCategory;
-    //console.log(queryURL);
-    return queryURL;
-  }
-
+  //Search bar to get the recipes for the keyword entered
   $("#search-btn").on("click", function (event) {
     event.preventDefault();
     $("#dropdown-display").text("Search Category");
@@ -446,23 +440,96 @@ $(document).ready(function () {
     var uid = cookievalues[1];
     
     // Creating array to save to FB
-    if (uid ) {
+    if (uid) {
       console.log(uid);
-      var myRecipe = {
-
-        recipeName: recipeNameforFB,
-        ingredients: ingredientsforFB,
-        imageLink: imagelinkforFB,
-        recipeLink: recipeLinkforFB,
-        recipeID: recipeIDforFB,
-        recipeCategory: CategoryforFB
-
-      }
-
-      // Saving to FB
-      database.ref(uid).push(myRecipe);
-      console.log("saving to firebase");
-      $("#recipeadded-message").text("Recipe Added");
+      console.log(recipeIDforFB);
+ 
+      database.ref().once("value", function(childSnapshot) {
+        // console.log(childSnapshot.val());
+        var users = childSnapshot.val();
+ 
+        var usersList = [];
+ 
+        for (user in users) {
+          // console.log(user);
+          usersList.push(user);
+        }
+ 
+        // console.log(usersList);
+ 
+        var userExistsInDB = usersList.some(function(user) {
+          return user === uid;
+        })
+ 
+        console.log("user exists in db: ", userExistsInDB);
+        if(!userExistsInDB) {
+          console.log("we need to add this user, so we will add it now");
+ 
+          // Creating array to save to FB
+          var myRecipe = {
+ 
+            recipeName: recipeNameforFB,
+            ingredients: ingredientsforFB,
+            imageLink: imagelinkforFB,
+            recipeLink: recipeLinkforFB,
+            recipeID: recipeIDforFB,
+            recipeCategory: CategoryforFB
+ 
+          }
+ 
+          database.ref().child(uid).push(myRecipe);
+        } else {
+          database.ref().on("child_added", function(childSnapshot) {
+            // console.log("giving us back something from db");
+ 
+            var user = childSnapshot.key;
+ 
+            var recipes = childSnapshot.val()
+            // console.log(user)
+ 
+          if (user === uid) {
+            console.log("There is a user match");
+ 
+            console.log("This is the new recipe we are adding: ", recipeIDforFB);
+ 
+              var exists = Object.values(recipes).some(function(recipe) {
+              console.log(recipe);
+                var recipe_ID = recipe.recipeID;
+                // console.log(recipe_ID);
+ 
+                return recipe_ID === recipeIDforFB;
+ 
+              });
+ 
+              console.log("exists: ", exists)
+ 
+              if(exists) {
+                console.log("recipe already exists")
+              } else {
+                console.log("We need to add this recipe, so we will add it now");
+                  var myRecipe = {
+ 
+                    recipeName: recipeNameforFB,
+                    ingredients: ingredientsforFB,
+                    imageLink: imagelinkforFB,
+                    recipeLink: recipeLinkforFB,
+                    recipeID: recipeIDforFB,
+                    recipeCategory: CategoryforFB
+ 
+                  }
+ 
+                  database.ref().child(uid).push(myRecipe);
+ 
+              }
+ 
+          } else {
+            console.log("These users do not match");
+          }
+          });
+        }
+      })
+ 
+ 
     } else {
       return false;
     }
