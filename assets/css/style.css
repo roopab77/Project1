@@ -14,6 +14,11 @@ body {
   font-family: 'Lobster', cursive;
 }
 
+#recipeadded-message
+{
+  font-family: 'Cabin', sans-serif;
+  font-size: 14px;
+}
 
 .img-restaurants {
   height: 100px;

@@ -8,7 +8,7 @@ $(document).ready(function () {
 
   // global variable for FB
   var ingredientsforFB = [];
-  var recipenameforFB = "";
+  var recipeNameforFB = "";
   var recipeLinkforFB = "";
   var imagelinkforFB = "";
   var recipeIDforFB = "";
@@ -104,7 +104,7 @@ $(document).ready(function () {
       recipelink.addClass("card-link");
       recipelink.text(RecipeData.matches[i].recipeName);
       recipelink.attr("value", RecipeData.matches[i].id);
-      recipelink.attr("href", "#");
+      recipelink.attr("href", "#a");
       recipelink.attr("class", "recipe-link");
       recipeLI.attr("value", RecipeData.matches[i].id);
       recipeLI.html(recipelink);
@@ -302,17 +302,19 @@ $(document).ready(function () {
     {
       var username = cookies[0].split("=");
       console.log(username);
-      $("#login-message").text ("Welcome back " + username[1]);
-      $("#myRecipes").attr("style","visibility:visible");
-      $("#signin").attr("style","visibility:hidden");
-      $("#sign-out").attr("style","visibility:visible");
+      $("#login-message").text ("Welcome  " + username[1]);
+      $("#myRecipes").attr("style","display:inline-block");
+      $("#signin").attr("style","display:none");
+      $("#sign-out").attr("style","display:inline-block");
+      $("#recipeadded-message").text("");
     }
     else
     {
       $("#login-message").text ("");
-      $("#myRecipes").attr("style","visibility:hidden");
-      $("#signin").attr("style","visibility:visible");
-      $("#sign-out").attr("style","visibility:hidden");
+      $("#myRecipes").attr("style","display:none");
+      $("#signin").attr("style","display:inline-block");
+      $("#sign-out").attr("style","display:none");
+      $("#recipeadded-message").text("Sign in to add to MY Recipes");
     }
 
   }
@@ -332,8 +334,8 @@ $(document).ready(function () {
     if(userid)
     {
       console.log(userid);
-    $("#myRecipes").attr("style","visibility:visible");
-    $("#signin").attr("style","visibility:hidden");
+    $("#myRecipes").attr("style","display:inline-block");
+    $("#signin").attr("style","display:none");
     }
 
   }
@@ -403,6 +405,8 @@ $(document).ready(function () {
 
       // Saving to FB
       database.ref(uid).push(myRecipe);
+      console.log("saving to firebase");
+      $("#recipeadded-message").text("Recipe Added");
     } else {
       return false;
     }
