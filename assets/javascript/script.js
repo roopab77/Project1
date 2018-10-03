@@ -22,6 +22,8 @@ $(document).ready(function () {
   var category = "";
   var TopTrendingrecipe = "";
 
+  var signedIn = false;
+
   //Get current location of the user 
   function getLocation() {
     if (navigator.geolocation) {
@@ -94,6 +96,11 @@ $(document).ready(function () {
 
   //Get the list of recipes for the specific category selected in the dropdown menu
   function updatePage(RecipeData) {
+    if (RecipeData.matches[0] == undefined) {
+      searchInput = $("#search-form-input").val().trim();
+      $("#recipe-list-ul").text(searchInput + " has no results");
+      return false;
+    };
     var recipeUl = $("#recipe-list-ul");
     recipeUl.empty();
    
@@ -121,6 +128,11 @@ $(document).ready(function () {
     $("#recipe-ingredients").empty();
     $("#recipe-image").empty();
     $(".nutrients-row").empty();
+    if (signedIn === true) {
+      $("#recipeadded-message").empty();
+    } else {
+      $("#recipeadded-message").text("Sign in to add to MY Recipes");
+    }
     var ingredients = response.ingredientLines;
     $("#recipe-name").text(response.name);
     // For FB
@@ -319,6 +331,7 @@ $(document).ready(function () {
     {
       var username = cookies[0].split("=");
       console.log(username);
+      signedIn = true;
       doThiswhenSignedin(username[1]);      
     }
     else
@@ -469,6 +482,7 @@ $(document).ready(function () {
       //authorizedUserSetup(result.user.uid);
       //sessionStorage.setItem("uid", result.user.uid); 
       var username = user.displayName ;
+      signedIn = true;
       document.cookie = "username=" + username;
       document.cookie = "uid=" + result.user.uid;
       location.reload();
@@ -493,6 +507,7 @@ $(document).ready(function () {
    removeCookie();
    firebase.auth().signOut().then(function(){
     database.ref.off();
+    signedIn = false;
    doThiswhenSignedOut();
    });
    location.reload();
