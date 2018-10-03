@@ -105,6 +105,7 @@ divCard.append(divCardHeader);
 divCard.append(divCardBody);
 recipelinkTag.append("For more details - ");
 recipelinkTag.append(aHref);
+recipelinkTag.attr("target", "_blank");
 divCard.append(recipelinkTag);
 console.log(category,recipeCategory);
 if((category == "") || (recipeCategory == category))

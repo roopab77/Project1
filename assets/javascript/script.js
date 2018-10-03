@@ -302,6 +302,7 @@ $(document).ready(function () {
     {
       var username = cookies[0].split("=");
       console.log(username);
+      
       $("#login-message").text ("Welcome  " + username[1]);
       $("#myRecipes").attr("style","display:inline-block");
       $("#signin").attr("style","display:none");
@@ -345,6 +346,7 @@ $(document).ready(function () {
   // .on("click") function associated with the dropdown Button
   $(".recipe-category").on("click", function (event) {
 
+    //alert("iam here");
     $("#dropdown-display:first-child").text($(this).text());
     $("#dropdown-display:first-child").val($(this).text());
     event.preventDefault();
@@ -413,10 +415,7 @@ $(document).ready(function () {
 
   });
 
-
-
   //Google Signin 
-
   $("#signin").on("click",function(event){
      //Google Authentication
 
@@ -448,12 +447,11 @@ $(document).ready(function () {
 
   });
 
-
   //On click sign out clear cookies 
   $("#sign-out").on("click",function(event){
-
    removeCookie();
    firebase.auth().signOut().then(function(){
+    database.ref.off();
     $("#login-message").text ("");
     $("#myRecipes").attr("style","visibility:hidden");
     $("#signin").attr("style","visibility:visible");
