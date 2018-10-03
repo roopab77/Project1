@@ -37,10 +37,10 @@
         </li>
       </ul>
       <div style="padding:10px; margin:5px">
-      <span id="login-message" style="margin-right:10px;color: white"></span>
-      <button type="button" class="btn btn-info" id="signin">Sign in</button>
-      <button type="button" class="btn btn-info"  id="sign-out" style="display: none;">Sign Out</button>
-    </div>
+        <span id="login-message" style="margin-right:10px;color: white"></span>
+        <button type="button" class="btn btn-info" id="signin">Sign in</button>
+        <button type="button" class="btn btn-info" id="sign-out" style="display: none;">Sign Out</button>
+      </div>
     </div>
   </nav>
 
@@ -80,19 +80,32 @@
         <div class="card">
           <div class="card-header bg-dark text-light">
             Recipes
-           <div class="btn-group float-right">
-              <button type="button" class="btn btn-info dropdown-toggle" id="dropdown-display" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
+            <div class="btn-group float-right">
+              <button type="button" class="btn btn-info dropdown-toggle" id="dropdown-display" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 Search Category
-              </button></div>
+              </button>
               <div class="dropdown-menu">
-                <a class="recipe-category dropdown-item" href="#" value="Italian">Italian</a>
-                <a class="recipe-category dropdown-item" href="#" value="Chinese">Chinese</a>
-                <a class="recipe-category dropdown-item" href="#" value="Mexican">Mexican</a>
-                <a class="recipe-category dropdown-item" href="#" value="Thai">Thai</a>
-      
+                <a class="recipe-category dropdown-item" href="#a" value="American">American</a>
+                <a class="recipe-category dropdown-item" href="#a" value="Chinese">Chinese</a>
+                <a class="recipe-category dropdown-item" href="#a" value="Cuban">Cuban</a>
+                <a class="recipe-category dropdown-item" href="#a" value="Greek">Greek</a>        
+                <a class="recipe-category dropdown-item" href="#a" value="Italian">Italian</a>
+                <a class="recipe-category dropdown-item" href="#a" value="Japanese">Japanese</a>
+                <a class="recipe-category dropdown-item" href="#a" value="Mediterranean">Mediterranean</a>
+                <a class="recipe-category dropdown-item" href="#a" value="Mexican">Mexican</a>
+                <a class="recipe-category dropdown-item" href="#a" value="Portuguese">Portuguese</a>
+                <a class="recipe-category dropdown-item" href="#a" value="Spanish">Spanish</a>
+                <a class="recipe-category dropdown-item" href="#a" value="Thai">Thai</a>
+
               </div>
             </div>
+          </div>
+
+      
+
+
+      
           <div class="card-body">
             <ul class="list-group list-group-flush" id="recipe-list-ul">
 
@@ -104,57 +117,57 @@
         <!-- Here goes the recipe details like ingredients ,nutrition facts ,image , link -->
         <div class="card" style="width:100%" id="recipe-details">
           <h5 class="card-header bg-dark text-light" id="recipe-details-header"><span id="recipe-name"></span>
-            <div class="float-right">  
-              <span id="recipeadded-message" ></span>            
+            <div class="float-right">
+              <span id="recipeadded-message"></span>
               <button type="button" class="btn btn-info" id="myRecipes" style="visibility:hidden">
                 Add to my Recipes
               </button>
-          </h4>
+              </h4>
 
 
-          <div class="row">
-            <div class="col-7 card-body text-left" id="recipe-ingredients"></div>
-            <div class="col-5 d-flex flex-wrap" id="recipe-image" style="margin:auto;  vertical-align: top"></div>
-          </div>
-          <div class="row justify-content-end">
-            <div class="col-6" id="nutrition-container">
-              <div class="text-right m-1" id="nutrition-btn-container"></div>
-              <div class="collapse" id="nutrition-table">
-                <table class="table table-sm table-hover">
-
-                  <tbody>
-                    <tr class="nutrients-row" id="calories"></tr>
-                    <tr class="nutrients-row" id="fat"></tr>
-                    <tr class="nutrients-row" id="cholesterol"></tr>
-                    <tr class="nutrients-row" id="sodium"></tr>
-                    <tr class="nutrients-row" id="carbs"></tr>
-                    <tr class="nutrients-row" id="fiber"></tr>
-                    <tr class="nutrients-row" id="sugars"></tr>
-                    <tr class="nutrients-row" id="protein"></tr>
-                  </tbody>
-                </table>
+              <div class="row">
+                <div class="col-7 card-body text-left" id="recipe-ingredients"></div>
+                <div class="col-5 d-flex flex-wrap" id="recipe-image" style="margin:auto;  vertical-align: top"></div>
               </div>
+              <div class="row justify-content-end">
+                <div class="col-6" id="nutrition-container">
+                  <div class="text-right m-1" id="nutrition-btn-container"></div>
+                  <div class="collapse" id="nutrition-table">
+                    <table class="table table-sm table-hover">
+
+                      <tbody>
+                        <tr class="nutrients-row" id="calories"></tr>
+                        <tr class="nutrients-row" id="fat"></tr>
+                        <tr class="nutrients-row" id="cholesterol"></tr>
+                        <tr class="nutrients-row" id="sodium"></tr>
+                        <tr class="nutrients-row" id="carbs"></tr>
+                        <tr class="nutrients-row" id="fiber"></tr>
+                        <tr class="nutrients-row" id="sugars"></tr>
+                        <tr class="nutrients-row" id="protein"></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
             </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <h5 class="card-header bg-dark text-light">
+              Restaurants: <span id="restaurant-category"></span>
+            </h5>
+
+            <div class="restDetails card-group" id="results-appear-here"></div>
           </div>
-
         </div>
       </div>
+
+
     </div>
-
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <h5 class="card-header bg-dark text-light">
-            Restaurants: <span id="restaurant-category"></span>
-          </h5>
-
-          <div class="restDetails card-group" id="results-appear-here"></div>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
 
   </div>
 
