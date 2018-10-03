@@ -86,6 +86,7 @@ var strarr = recLink.split(".com");
 h5CardTitle.text(recName);
 aHref.attr("href",recLink);
 aHref.text(strarr[0] + "....");  
+aHref.attr("target","_blank");
 imgTag.attr("src",image);
 //console.log(ingredients.length);
 for(var i=0;i<ingredients.length;i++)
