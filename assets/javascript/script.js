@@ -422,7 +422,7 @@ $(document).ready(function () {
 
   $("#search-btn").on("click", function (event) {
     event.preventDefault();
-
+    $("#dropdown-display").text("Search Category");
     category = $("#search-form-input").val().trim();
 
     if (category == "") {
