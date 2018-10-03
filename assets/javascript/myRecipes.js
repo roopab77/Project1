@@ -1,3 +1,9 @@
+$(document).ready(function () {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope("profile");
+  provider.addScope("email");
+
+ 
  //This function checks if you are already signed in 
  function CheckIfSignedIn()
  {
@@ -8,19 +14,31 @@
    {
      var username = cookies[0].split("=");
      console.log(username);
-     $("#login-message").text ("Welcome back " + username[1]);
-     $("#myRecipes").attr("style","visibility:visible");
-     $("#signin").attr("style","visibility:hidden");
-     $("#sign-out").attr("style","visibility:visible");
+     doThiswhenSignedin(username[1]);      
    }
    else
    {
-     $("#login-message").text ("");
-     $("#myRecipes").attr("style","visibility:hidden");
-     $("#signin").attr("style","visibility:visible");
-     $("#sign-out").attr("style","visibility:hidden");
+     doThiswhenSignedOut();
    }
 
+ }
+
+ function doThiswhenSignedin(username)
+ {
+   $("#login-message").text ("Welcome  " + username);
+     $("#myRecipes").attr("style","display:inline-block");
+     $("#signin").attr("style","display:none");
+     $("#sign-out").attr("style","display:inline-block");
+     $("#recipeadded-message").text("");
+ }
+
+ function doThiswhenSignedOut()
+ {
+   $("#login-message").text ("");
+     $("#myRecipes").attr("style","display:none");
+     $("#signin").attr("style","display:inline-block");
+     $("#sign-out").attr("style","display:none");
+     $("#recipeadded-message").text("Sign in to add to MY Recipes");
  }
 
  function removeCookie()
@@ -105,6 +123,7 @@ divCard.append(divCardHeader);
 divCard.append(divCardBody);
 recipelinkTag.append("For more details - ");
 recipelinkTag.append(aHref);
+recipelinkTag.attr("target", "_blank");
 divCard.append(recipelinkTag);
 console.log(category,recipeCategory);
 if((category == "") || (recipeCategory == category))
@@ -152,13 +171,44 @@ $(document).on("click", ".delete-RecipefromFB", function (event) {
   location.reload();
  });
 
+ $("#signin").on("click",function(event){
+  //Google Authentication
+
+  firebase.auth().signInWithPopup(provider).then(function (result) {
+   // This gives you a Google Access Token. You can use it to access the Google API.
+   var token = result.credential.accessToken;
+   // The signed-in user info.
+   var user = result.user;
+   console.log(user);
+   //authorizedUserSetup(result.user.uid);
+   //sessionStorage.setItem("uid", result.user.uid); 
+   var username = user.displayName ;
+   document.cookie = "username=" + username;
+   document.cookie = "uid=" + result.user.uid;
+   location.reload();
+  
+   // ...
+ }).catch(function (error) {
+   // Handle Errors here.
+   var errorCode = error.code;
+   var errorMessage = error.message;
+   // The email of the user's account used.
+   var email = error.email;
+   // The firebase.auth.AuthCredential type that was used.
+   var credential = error.credential;
+   // ...
+ });
+ 
+
+});
+
  $(".recipe-category").on("click", function (event) {
    readFromFireBase($(this).attr("value"));
 
  });
 //on page load 
 
-$(document).ready(function () {
+
   CheckIfSignedIn();
   readFromFireBase("");
 });

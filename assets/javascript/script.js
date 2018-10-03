@@ -291,6 +291,24 @@ $(document).ready(function () {
     });
   }
 
+  function doThiswhenSignedin(username)
+  {
+    $("#login-message").text ("Welcome  " + username);
+      $("#myRecipes").attr("style","display:inline-block");
+      $("#signin").attr("style","display:none");
+      $("#sign-out").attr("style","display:inline-block");
+      $("#recipeadded-message").text("");
+  }
+
+  function doThiswhenSignedOut()
+  {
+    $("#login-message").text ("");
+      $("#myRecipes").attr("style","display:none");
+      $("#signin").attr("style","display:inline-block");
+      $("#sign-out").attr("style","display:none");
+      $("#recipeadded-message").text("Sign in to add to MY Recipes");
+  }
+
   //This function checks if you are already signed in 
   function CheckIfSignedIn()
   {
@@ -301,19 +319,11 @@ $(document).ready(function () {
     {
       var username = cookies[0].split("=");
       console.log(username);
-      $("#login-message").text ("Welcome  " + username[1]);
-      $("#myRecipes").attr("style","display:inline-block");
-      $("#signin").attr("style","display:none");
-      $("#sign-out").attr("style","display:inline-block");
-      $("#recipeadded-message").text("");
+      doThiswhenSignedin(username[1]);      
     }
     else
     {
-      $("#login-message").text ("");
-      $("#myRecipes").attr("style","display:none");
-      $("#signin").attr("style","display:inline-block");
-      $("#sign-out").attr("style","display:none");
-      $("#recipeadded-message").text("Sign in to add to MY Recipes");
+      doThiswhenSignedOut();
     }
 
   }
@@ -333,8 +343,7 @@ $(document).ready(function () {
     if(userid)
     {
       console.log(userid);
-    $("#myRecipes").attr("style","display:inline-block");
-    $("#signin").attr("style","display:none");
+      doThiswhenSignedin();
     }
 
   }
@@ -344,6 +353,7 @@ $(document).ready(function () {
   // .on("click") function associated with the dropdown Button
   $(".recipe-category").on("click", function (event) {
 
+    //alert("iam here");
     $("#dropdown-display:first-child").text($(this).text());
     $("#dropdown-display:first-child").val($(this).text());
     event.preventDefault();
@@ -446,10 +456,7 @@ $(document).ready(function () {
 
   });
 
-
-
   //Google Signin 
-
   $("#signin").on("click",function(event){
      //Google Authentication
 
@@ -459,7 +466,7 @@ $(document).ready(function () {
       // The signed-in user info.
       var user = result.user;
       console.log(user);
-      authorizedUserSetup(result.user.uid);
+      //authorizedUserSetup(result.user.uid);
       //sessionStorage.setItem("uid", result.user.uid); 
       var username = user.displayName ;
       document.cookie = "username=" + username;
@@ -481,17 +488,12 @@ $(document).ready(function () {
 
   });
 
-
   //On click sign out clear cookies 
   $("#sign-out").on("click",function(event){
-
    removeCookie();
    firebase.auth().signOut().then(function(){
-    $("#login-message").text ("");
-    $("#myRecipes").attr("style","visibility:hidden");
-    $("#signin").attr("style","visibility:visible");
-    $("#sign-out").attr("style","visibility:hidden");
-
+    database.ref.off();
+   doThiswhenSignedOut();
    });
    location.reload();
   });
