@@ -1,32 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <title>My Recipes</title>
-</head>
-<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="#"><img class="logo w=100%" src="assets/images/Qlogo.jpg" alt="logo"></a>
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link " href="index.html">Home </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="myRecipes.html">My Recipes<span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
-  </div>
-</nav>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
+        <link href="https://fonts.googleapis.com/css?family=Cabin|Lobster" rel="stylesheet">
+        <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+      
+        <link rel="stylesheet" type="text/css" href="assets/css/minicarousel.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/minicarousel-theme.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      
+      
+        <title>Quisine</title>
+      </head>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" ></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="#"><img class="logo w=100%" src="assets/images/Qlogo.jpg" alt="logo"></a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link " href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="myRecipes.html" target="_blank">My Recipes</a>
+              </li>
+            </ul>
+            <span id="login-message"></span>
+            <button type="button" class="btn btn-info"  id="sign-out" style="visibility: hidden; margin: 5px">Sign Out</button>
+            <div class="btn-group mr-5">
+              <button type="button" class="btn btn-info dropdown-toggle" id="dropdown-display" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                Search Category
+              </button>
+              <div class="dropdown-menu">
+                <a class="recipe-category dropdown-item" href="#" value="Italian">Italian</a>
+                <a class="recipe-category dropdown-item" href="#" value="Chinese">Chinese</a>
+                <a class="recipe-category dropdown-item" href="#" value="Mexican">Mexican</a>
+                <a class="recipe-category dropdown-item" href="#" value="Thai">Thai</a>
+      
+              </div>
+            </div>
+          </div>
+        </nav>
 <div style="width:90%">
   
       <!--  Recipe Body  -->
@@ -35,7 +58,17 @@
 </div>
 </div>
 
-
+<div class="footer-dark">
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a
+              href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
+        </div>
+        <p class="copyright">Roopa, Seema , Kevin and Nestor © 2018</p>
+      </div>
+    </footer>
+  </div>
 <body>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
