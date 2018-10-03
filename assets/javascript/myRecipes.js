@@ -144,12 +144,20 @@ var config = {
   messagingSenderId: "962399784259"
 };
 firebase.initializeApp(config);
+var database = firebase.database();
 
 
 $(document).on("click", ".delete-RecipefromFB", function (event) {
   
-  
-  database.ref(uid + "/" + $(this).attr("id")).remove();
+  var cookies = document.cookie.split(";");
+  var uidtopass= "";
+   if(cookies[0] != "")
+   {
+     var username = cookies[0].split("=");
+     uid = cookies[1].split("=");
+     uidtopass = uid[1];
+   }
+  database.ref(uidtopass + "/" + $(this).attr("id")).remove();
  // database.ref(uid + "/" + $(this).attr("id")).remove()
   //alert($(this).attr("id"));
   $( this ).parent().parent().parent().parent().attr("class","");
