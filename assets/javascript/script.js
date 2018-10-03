@@ -103,7 +103,7 @@ $(document).ready(function () {
       recipelink.addClass("card-link");
       recipelink.text(RecipeData.matches[i].recipeName);
       recipelink.attr("value", RecipeData.matches[i].id);
-      recipelink.attr("href", "#");
+      recipelink.attr("href", "#a");
       recipelink.attr("class", "recipe-link");
       recipeLI.attr("value", RecipeData.matches[i].id);
       recipeLI.html(recipelink);
