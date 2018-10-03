@@ -86,6 +86,7 @@ var strarr = recLink.split(".com");
 h5CardTitle.text(recName);
 aHref.attr("href",recLink);
 aHref.text(strarr[0] + "....");  
+aHref.attr("target","_blank");
 imgTag.attr("src",image);
 //console.log(ingredients.length);
 for(var i=0;i<ingredients.length;i++)
@@ -128,11 +129,6 @@ var config = {
 };
 firebase.initializeApp(config);
 var database = firebase.database();
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 3b867109c83e6fd84c33ff1f296b0cd3eb229061
 $(document).on("click", ".delete-RecipefromFB", function (event) {
   
   var cookies = document.cookie.split(";");
