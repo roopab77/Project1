@@ -22,6 +22,8 @@ $(document).ready(function () {
   var category = "";
   var TopTrendingrecipe = "";
 
+  var signedIn = false;
+
   //Get current location of the user 
   function getLocation() {
     if (navigator.geolocation) {
@@ -94,6 +96,11 @@ $(document).ready(function () {
 
   //Get the list of recipes for the specific category selected in the dropdown menu
   function updatePage(RecipeData) {
+    if (RecipeData.matches[0] == undefined) {
+      searchInput = $("#search-form-input").val().trim();
+      $("#recipe-list-ul").text(searchInput + " has no results");
+      return false;
+    };
     var recipeUl = $("#recipe-list-ul");
     recipeUl.empty();
    
@@ -121,6 +128,11 @@ $(document).ready(function () {
     $("#recipe-ingredients").empty();
     $("#recipe-image").empty();
     $(".nutrients-row").empty();
+    if (signedIn === true) {
+      $("#recipeadded-message").empty();
+    } else {
+      $("#recipeadded-message").text("Sign in to add to MY Recipes");
+    }
     var ingredients = response.ingredientLines;
     $("#recipe-name").text(response.name);
     // For FB
@@ -140,15 +152,14 @@ $(document).ready(function () {
     //For saving into firebase
     imagelinkforFB = response.images[0].hostedLargeUrl;
     recipeLinkforFB = recipelink;
-    var strarr = recipelink.split(".com");
-    recipeInstructions.text(strarr[0] + "....");
+    recipeInstructions.html('<button class="btn btn-info">Click Here for Recipe Instructions</button>');
     recipeInstructions.attr("href", recipelink);
     recipeInstructions.attr("target", "_blank");
     recipeInstructions.attr("rel", "nofollow");
     recipeImage.attr("src", response.images[0].hostedLargeUrl);
     recipeImage.addClass("img-fluid rounded");
     $("#recipe-ingredients").append(ingredientUL);
-    $("#recipe-ingredients").append("For more instructions click here ");
+  
     $("#recipe-ingredients").append(recipeInstructions);
     $("#recipe-image").append(recipeImage);
 
@@ -320,6 +331,7 @@ $(document).ready(function () {
     {
       var username = cookies[0].split("=");
       console.log(username);
+      signedIn = true;
       doThiswhenSignedin(username[1]);      
     }
     else
@@ -392,6 +404,40 @@ $(document).ready(function () {
 
   });
 
+  // GET RECIPE FROM SEARCH FORM IN NAV BAR
+
+  function queryUrlForSearchBar(foodCategory) {
+    // queryURL is the url we'll use to query the API
+
+    var appID = "5ed766c5";
+    var apiKey = "28992938ae132c1c2a3ed5a1a0bd7a4f";
+
+    var queryURL = "https://api.yummly.com/v1/api/recipes?_app_id=" + appID + "&_app_key=" + apiKey + "&q=" +
+      foodCategory;
+    //For FB
+    CategoryforFB = foodCategory;
+    //console.log(queryURL);
+    return queryURL;
+  }
+
+  $("#search-btn").on("click", function (event) {
+    event.preventDefault();
+
+    category = $("#search-form-input").val().trim();
+
+    if (category == "") {
+      $("#search-form-input").attr("placeholder", "Type Something!")
+      return false
+    }
+
+    var queryURL = queryUrlForSearchBar(category);
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(updatePage);
+
+  });
+
   //To save the recipes to firebase 
   $("#myRecipes").on("click", function (event) {
     event.preventDefault();
@@ -436,6 +482,7 @@ $(document).ready(function () {
       //authorizedUserSetup(result.user.uid);
       //sessionStorage.setItem("uid", result.user.uid); 
       var username = user.displayName ;
+      signedIn = true;
       document.cookie = "username=" + username;
       document.cookie = "uid=" + result.user.uid;
       location.reload();
@@ -460,6 +507,7 @@ $(document).ready(function () {
    removeCookie();
    firebase.auth().signOut().then(function(){
     database.ref.off();
+    signedIn = false;
    doThiswhenSignedOut();
    });
    location.reload();

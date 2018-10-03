@@ -2,7 +2,6 @@ $(document).ready(function () {
   var provider = new firebase.auth.GoogleAuthProvider();
   provider.addScope("profile");
   provider.addScope("email");
-
  
  //This function checks if you are already signed in 
  function CheckIfSignedIn()
@@ -20,9 +19,7 @@ $(document).ready(function () {
    {
      doThiswhenSignedOut();
    }
-
  }
-
  function doThiswhenSignedin(username)
  {
    $("#login-message").text ("Welcome  " + username);
@@ -31,7 +28,6 @@ $(document).ready(function () {
      $("#sign-out").attr("style","display:inline-block");
      $("#recipeadded-message").text("");
  }
-
  function doThiswhenSignedOut()
  {
    $("#login-message").text ("");
@@ -40,7 +36,6 @@ $(document).ready(function () {
      $("#sign-out").attr("style","display:none");
      $("#recipeadded-message").text("Sign in to add to MY Recipes");
  }
-
  function removeCookie()
  {
    var res = document.cookie;
@@ -50,24 +45,17 @@ $(document).ready(function () {
       document.cookie = key[0]+" =; expires = Thu, 01 Jan 1970 00:00:00 UTC";
    }
  }
-
  function readFromFireBase(category)  
  {
   $("#details-appear-here").empty();
   var cookies = document.cookie.split(";");
   var cookievalues = cookies[1].split("=");
   var uid = cookievalues[1];
-
-
 // upon successful login, in the callback say uid = result.user.uid
-
 var database = firebase.database();
-
 //  Create Firebase event for adding employee to the database and a row in the html when a user adds an entry 
-
 database.ref(uid).on("child_added", function(childSnapshot) {
 //console.log(childSnapshot.val());
-
 // Store everything into a variable.
 var recName = childSnapshot.val().recipeName;
 var ingredients = childSnapshot.val().ingredients;
@@ -77,7 +65,6 @@ var recipeID = childSnapshot.val().recipeID;
 var keyinFB = childSnapshot.key;
 var recipeCategory = childSnapshot.val().recipeCategory;
 //console.log(ingredients);
-
 var divCard = $("<div>").addClass("card main-card");
 divCard.attr("style","height: 250px; width: 95%; margin:10px; min-width:95%");
 var divCardHeader = $("<div>").addClass("card-header");
@@ -95,11 +82,9 @@ imgTag.attr("style"," height: 200px;");
 var recipelinkTag = $("<div>").addClass("card-footer");
 var aHref = $("<a>");
 var strarr = recLink.split(".com");
-
 //var arrayIngredients = JSON.parse(ingredients,"");
 h5CardTitle.text(recName);
 aHref.attr("href",recLink);
-
 aHref.text(strarr[0] + "....");  
 imgTag.attr("src",image);
 //console.log(ingredients.length);
@@ -130,9 +115,7 @@ if((category == "") || (recipeCategory == category))
 {
 $("#details-appear-here").append(divCard);
 }
-
 });
-
  }
 // FB key
 var config = {
@@ -145,8 +128,11 @@ var config = {
 };
 firebase.initializeApp(config);
 var database = firebase.database();
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 3b867109c83e6fd84c33ff1f296b0cd3eb229061
 $(document).on("click", ".delete-RecipefromFB", function (event) {
   
   var cookies = document.cookie.split(";");
@@ -164,24 +150,19 @@ $(document).on("click", ".delete-RecipefromFB", function (event) {
   $( this ).parent().parent().parent().parent().attr("style","height:0px"); 
   $( this ).parent().parent().parent().parent().empty();
 });
-
  //On click sign out clear cookies 
  $("#sign-out").on("click",function(event){
-
   removeCookie();
   firebase.auth().signOut().then(function(){
    $("#login-message").text ("");
    $("#myRecipes").attr("style","visibility:hidden");
    $("#signin").attr("style","visibility:visible");
    $("#sign-out").attr("style","visibility:hidden");
-
   });
   location.reload();
  });
-
  $("#signin").on("click",function(event){
   //Google Authentication
-
   firebase.auth().signInWithPopup(provider).then(function (result) {
    // This gives you a Google Access Token. You can use it to access the Google API.
    var token = result.credential.accessToken;
@@ -207,18 +188,12 @@ $(document).on("click", ".delete-RecipefromFB", function (event) {
    // ...
  });
  
-
 });
-
  $(".recipe-category").on("click", function (event) {
    readFromFireBase($(this).attr("value"));
-
  });
 //on page load 
-
-
   CheckIfSignedIn();
   readFromFireBase("");
 });
-
 
