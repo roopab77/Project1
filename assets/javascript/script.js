@@ -66,6 +66,19 @@ $(document).ready(function () {
     return queryUrlByID;
   }
 
+  function ajaxtofillIngredients(recipeID)
+  { 
+    var queryUrlByID = buildQueryURLforID(recipeID);
+    $.ajax({
+      url: queryUrlByID,
+      method: "GET"
+    }).then(function (response) {
+      //console.log(response);
+      GetRecipeDetails(response);
+    });
+
+  }
+
   //On page load fill the  page with top trending recipes and the details of the top recipe 
   function TopTrendingRecipesOnPageLoad() {
     var queryURL = buildQueryURL("trending");
@@ -74,20 +87,8 @@ $(document).ready(function () {
       method: "GET"
     }).then(function (matches) {
 
-      updatePage(matches);
-
-      var recipeID = TopTrendingrecipe;
-
-      var queryUrlByID = buildQueryURLforID(recipeID);
-      //console.log("onload url to pull details   " + queryUrlByID);
-
-      $.ajax({
-        url: queryUrlByID,
-        method: "GET"
-      }).then(function (response) {
-        //console.log(response);
-        GetRecipeDetails(response);
-      });
+      updatePage(matches);           
+      ajaxtofillIngredients(TopTrendingrecipe);      
     });
   }
 
@@ -95,7 +96,7 @@ $(document).ready(function () {
   function updatePage(RecipeData) {
     var recipeUl = $("#recipe-list-ul");
     recipeUl.empty();
-    TopTrendingrecipe = RecipeData.matches[0].id;
+   
     //console.log("Toptrendingrecipe  " + TopTrendingrecipe);
     for (var i = 0; i < RecipeData.matches.length; i++) {
       var recipeLI = $("<li>");
@@ -109,6 +110,8 @@ $(document).ready(function () {
       recipeLI.html(recipelink);
       recipeUl.append(recipeLI);
     }
+    TopTrendingrecipe = RecipeData.matches[0].id;
+    ajaxtofillIngredients(TopTrendingrecipe);
     LoadRestaurants();
   }
 
@@ -143,7 +146,7 @@ $(document).ready(function () {
     recipeInstructions.attr("target", "_blank");
     recipeInstructions.attr("rel", "nofollow");
     recipeImage.attr("src", response.images[0].hostedLargeUrl);
-    recipeImage.addClass("img-fluid");
+    recipeImage.addClass("img-fluid rounded");
     $("#recipe-ingredients").append(ingredientUL);
     $("#recipe-ingredients").append("For more instructions click here ");
     $("#recipe-ingredients").append(recipeInstructions);
@@ -258,19 +261,23 @@ $(document).ready(function () {
 
     }).then(function (response) {
       // console.log(response);
+     
       var divRow = $("<div>");
       $("#results-appear-here").empty();
-      for (var i = 0; i < 6; i++) {
-
-        var divCard = $("<div>").addClass("card");
+      for (var i = 0; i < 9; i++) {
+        var price = "";
+        if(response.businesses[i].price != null){price = "Price : " + response.businesses[i].price;}
+        
+        var divCard = $("<div>").addClass("card rounded");
         var imgtag = $("<img>").addClass("card-img-top img-restaurants");
         var divCardbody = $("<div>").addClass("card-body restaurant-card");
         var pcardtext = $("<p>").addClass("card-text restaurant-name");
         imgtag.attr("src", response.businesses[i].image_url);
-        imgtag.attr
+        imgtag.attr("style","width:100%");
+        divCard.attr( "style","margin:5px");
         pcardtext.append(response.businesses[i].name);
         pcardtext.append("<br/>" + response.businesses[i].location.display_address);
-        pcardtext.append("<br/>Price" + response.businesses[i].price + "   Rating :" + response.businesses[i].rating);
+        pcardtext.append("<br/>" + price + "     Rating :" + response.businesses[i].rating);
         //console.log(response.businesses[i].name,response.businesses[i].display_address);
         divCardbody.append(pcardtext);
         divCard.append(imgtag);
@@ -288,21 +295,39 @@ $(document).ready(function () {
   //This function checks if you are already signed in 
   function CheckIfSignedIn()
   {
-    var uid = localStorage.getItem("uid");
-    if(uid)
+    var cookies = document.cookie.split(";");
+    console.log(cookies);
+    
+    if(cookies[0] != "")
     {
+      var username = cookies[0].split("=");
+      console.log(username);
+      $("#login-message").text ("Welcome back " + username[1]);
       $("#myRecipes").attr("style","visibility:visible");
       $("#signin").attr("style","visibility:hidden");
+      $("#sign-out").attr("style","visibility:visible");
     }
     else
     {
+      $("#login-message").text ("");
       $("#myRecipes").attr("style","visibility:hidden");
       $("#signin").attr("style","visibility:visible");
+      $("#sign-out").attr("style","visibility:hidden");
     }
 
   }
 
-  function authorizedUserSetup(userid){
+  function removeCookie()
+  {
+    var res = document.cookie;
+    var multiple = res.split(";");
+    for(var i = 0; i < multiple.length; i++) {
+       var key = multiple[i].split("=");
+       document.cookie = key[0]+" =; expires = Thu, 01 Jan 1970 00:00:00 UTC";
+    }
+  }
+
+   function authorizedUserSetup(userid){
 
     if(userid)
     {
@@ -317,6 +342,7 @@ $(document).ready(function () {
 
   // .on("click") function associated with the dropdown Button
   $(".recipe-category").on("click", function (event) {
+
     $("#dropdown-display:first-child").text($(this).text());
     $("#dropdown-display:first-child").val($(this).text());
     event.preventDefault();
@@ -329,6 +355,8 @@ $(document).ready(function () {
       url: queryURL,
       method: "GET"
     }).then(updatePage);
+    console.log(TopTrendingrecipe);
+    //ajaxtofillIngredients(TopTrendingrecipe);
   });
 
   //When earch recipe title is clicked bring the ingredients image and link and nutriotion facts of the recipe
@@ -355,7 +383,9 @@ $(document).ready(function () {
   //To save the recipes to firebase 
   $("#myRecipes").on("click", function (event) {
     event.preventDefault();
-    var uid = localStorage.getItem("uid");
+    var cookies = document.cookie.split(";");
+    var cookievalues = cookies[1].split("=");
+    var uid = cookievalues[1];
     
     // Creating array to save to FB
     if (uid ) {
@@ -379,6 +409,8 @@ $(document).ready(function () {
 
   });
 
+
+
   //Google Signin 
 
   $("#signin").on("click",function(event){
@@ -389,9 +421,13 @@ $(document).ready(function () {
       var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
-
+      console.log(user);
       authorizedUserSetup(result.user.uid);
-      localStorage.setItem("uid", result.user.uid);   
+      //sessionStorage.setItem("uid", result.user.uid); 
+      var username = user.displayName ;
+      document.cookie = "username=" + username;
+      document.cookie = "uid=" + result.user.uid;
+      location.reload();
      
       // ...
     }).catch(function (error) {
@@ -407,6 +443,22 @@ $(document).ready(function () {
     
 
   });
+
+
+  //On click sign out clear cookies 
+  $("#sign-out").on("click",function(event){
+
+   removeCookie();
+   firebase.auth().signOut().then(function(){
+    $("#login-message").text ("");
+    $("#myRecipes").attr("style","visibility:hidden");
+    $("#signin").attr("style","visibility:visible");
+    $("#sign-out").attr("style","visibility:hidden");
+
+   });
+   location.reload();
+  });
+
   //on page load display the top trending recipes
 
 
