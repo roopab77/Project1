@@ -137,15 +137,16 @@ $(document).ready(function () {
     //For saving into firebase
     imagelinkforFB = response.images[0].hostedLargeUrl;
     recipeLinkforFB = recipelink;
-    var strarr = recipelink.split(".com");
-    recipeInstructions.text(strarr[0] + "....");
+   
+    recipeInstructions.html('<button class="btn btn-info">Click here for instructions</button>');
     recipeInstructions.attr("href", recipelink);
     recipeInstructions.attr("target", "_blank");
     recipeInstructions.attr("rel", "nofollow");
+
     recipeImage.attr("src", response.images[0].hostedLargeUrl);
     recipeImage.addClass("img-fluid");
     $("#recipe-ingredients").append(ingredientUL);
-    $("#recipe-ingredients").append("For more instructions click here ");
+ 
     $("#recipe-ingredients").append(recipeInstructions);
     $("#recipe-image").append(recipeImage);
 
