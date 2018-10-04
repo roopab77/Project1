@@ -441,8 +441,10 @@ $(document).ready(function () {
     
     // Creating array to save to FB
     if (uid) {
+
       console.log(uid);
       console.log(recipeIDforFB);
+      $("#recipeadded-message").text("Added to MyRecipes");
  
       database.ref().once("value", function(childSnapshot) {
         // console.log(childSnapshot.val());
